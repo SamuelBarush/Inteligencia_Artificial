@@ -9,10 +9,14 @@ print("UPDATED")
 tablero.show_board()
 
 """
+tablero = Board("Prac_1/board1.txt")
 
-
-agente = Agent("Prac_1/board1.txt")
-
+agente = Agent([0,0],tablero)
+tablero.show_board()
+print("INITIAL")
+agente.show_pos_actual()
+agente.mover_arriba()
 agente.show_pos_actual()
 
+tablero.show_board()
     

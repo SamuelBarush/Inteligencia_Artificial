@@ -49,7 +49,7 @@ class Board:
     def get_cell_value(self, coordinates):
         x, y = coordinates
         if 0 <= x < len(self.board_data) and 0 <= y < len(self.board_data[0]):
-            return self.board_data[x][y]
+            return self.board_data[y][x]
         else:
             print("Invalid coordinates")
             return None  # You can choose to return a default value or raise an exception instead of None

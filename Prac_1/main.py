@@ -13,10 +13,12 @@ tablero = Board("Prac_1/board1.txt")
 
 agente = Agent([0,0],tablero)
 tablero.show_board()
-print("INITIAL")
-agente.show_pos_actual()
-agente.mover_arriba()
-agente.show_pos_actual()
-
+print()
+agente.mover_izq()
+print()
 tablero.show_board()
-    
+agente.mover_abajo()
+print()
+tablero.show_board()
+
+

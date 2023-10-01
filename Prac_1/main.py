@@ -1,4 +1,5 @@
 import pygame
+<<<<<<< Updated upstream
 import sys
 
 # Construyendo la ventana del juego
@@ -71,3 +72,43 @@ def main():
 
 if __name__ == "__main__":
     main()
+=======
+from class_Map import Board
+from class_Agent import Agent
+from class_Game import Rend
+
+# Inicializar Pygame
+pygame.init()
+
+# Tamaño de la ventana y celda
+ANCHO_VENTANA = 800
+ALTO_VENTANA = 600
+TAMANO_CELDA = 30
+
+# Crear una instancia de la clase Board con el archivo deseado
+archivo_tablero = "Prac_1/board1.txt"
+tablero = Board(archivo_tablero, (1, 1), (3, 3))
+
+# Crear una instancia de la clase Agent
+agente = Agent(tablero)
+
+# Crear una instancia de la clase Rend
+rend = Rend(tablero, agente, TAMANO_CELDA)
+
+# Crear la ventana
+ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
+pygame.display.set_caption("Dibujando Tablero")
+
+# Bucle principal
+ejecutando = True
+while ejecutando:
+    for evento in pygame.event.get():
+        if evento.type == pygame.QUIT:
+            ejecutando = False
+
+    ventana.fill((0, 0, 0))  # Llenar la ventana con color negro
+    rend.dibujar_mapa(ventana)
+    pygame.display.update()
+
+pygame.quit()
+>>>>>>> Stashed changes

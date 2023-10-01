@@ -6,7 +6,7 @@ class Agent:
         self.pos_actual = pos_inicial
         self.value = self.tablero.get_cell_value(self.pos_actual)
         self.value[2] = "X"
-        tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],self.value)
+        tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],self.value)
 
     def mover_izq(self):
         
@@ -16,7 +16,7 @@ class Agent:
         else:
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
-            self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],value)
+            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[0] += -1  
             self.set_pos_actual()    
         
@@ -28,7 +28,7 @@ class Agent:
         else:
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
-            self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],value)
+            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[0] += 1
             self.set_pos_actual() 
         
@@ -39,7 +39,7 @@ class Agent:
         else:
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
-            self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],value)
+            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[1] += -1
             self.set_pos_actual() 
         
@@ -50,9 +50,22 @@ class Agent:
         else:
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
-            self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],value)
+            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[1] += 1
-            self.set_pos_actual() 
+            self.set_pos_actual()
+            
+    def sensor_knowledge(self):
+        aux = self.pos_actual
+        mov_arriba = self.pos_actual [1] - 1
+        aux = self.tablero.get_cell_value((self.pos_actual[0],mov_arriba)) 
+        aux[2] = 1
+        sen_arr = self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],aux)
+        if (sen_arr == 0):
+            self.pos_actual[1] = mov_arriba
+            self.set_pos_actual()
+        return 0
+        mov_abajo = self.pos_actual [1] + 1
+        sen_abaj = self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],aux)
 
     def show_pos_actual(self):
         print(self.pos_actual)
@@ -63,5 +76,5 @@ class Agent:
     def set_pos_actual(self):
         aux = self.tablero.get_cell_value(self.pos_actual)
         aux[2] = "X"
-        self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],aux)
+        self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],aux)
     

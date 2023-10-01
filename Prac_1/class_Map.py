@@ -34,9 +34,11 @@ class Board:
         
         return board
 
-    def update_cel_values(self, pos_row, pos_col, values):
+    def update_cel_values(self, pos_row, pos_col, values): 
+        row = pos_col
+        col	= pos_row
         if 0 <= pos_row < len(self.board_data) and 0 <= pos_col < len(self.board_data[0]) and len(values) == 3:
-            self.board_data[pos_row][pos_col] = values
+            self.board_data[row][col] = values
         else:
             print("Invalid position or values")
 

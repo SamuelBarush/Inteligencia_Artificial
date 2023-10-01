@@ -58,14 +58,40 @@ class Agent:
         aux = self.pos_actual
         mov_arriba = self.pos_actual [1] - 1
         aux = self.tablero.get_cell_value((self.pos_actual[0],mov_arriba)) 
-        aux[2] = 1
-        sen_arr = self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],aux)
-        if (sen_arr == 0):
-            self.pos_actual[1] = mov_arriba
-            self.set_pos_actual()
-        return 0
+        if(aux [2] == 1):
+            print("Camino anteriormente descubierto")
+        else :
+
+            aux[2] = "D"
+            self.tablero.update_cel_values(self.pos_actual[0], mov_arriba,aux)
+        
+
+        aux_b = self.pos_actual
         mov_abajo = self.pos_actual [1] + 1
-        sen_abaj = self.tablero.update_cel_values(self.pos_actual[1],self.pos_actual[0],aux)
+        aux_b = self.tablero.get_cell_value((self.pos_actual[0],mov_abajo))
+        if(aux_b [2] == 1):
+            print("Camino anteriormente descubierto")
+        else :
+            aux_b[2] = "D"
+            self.tablero.update_cel_values(self.pos_actual[0], mov_abajo,aux_b)
+
+        aux_c = self.pos_actual
+        mov_der = self.pos_actual [0] + 1
+        aux_c = self.tablero.get_cell_value((mov_der, self.pos_actual[1]))
+        if(aux_c [2] == 1):
+            print("Camino anteriormente descubierto")
+        else :
+            aux_c[2] = "D"
+            self.tablero.update_cel_values( mov_der,self.pos_actual[1],aux_c)
+
+        aux_d = self.pos_actual
+        mov_izq = self.pos_actual [0] - 1
+        aux_d = self.tablero.get_cell_value((mov_izq, self.pos_actual[1]))
+        if(aux_d [2] == 1):
+            print("Camino anteriormente descubierto")
+        else :
+            aux_d[2] = "D"
+            self.tablero.update_cel_values( mov_izq,self.pos_actual[1],aux_d)
 
     def show_pos_actual(self):
         print(self.pos_actual)

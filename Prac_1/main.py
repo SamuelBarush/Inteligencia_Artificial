@@ -22,3 +22,5 @@ tablero.show_board()
 print()
 agente.sensor_knowledge()
 tablero.show_board()
+
+

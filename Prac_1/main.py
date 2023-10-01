@@ -9,9 +9,9 @@ print("UPDATED")
 tablero.show_board()
 
 """
-tablero = Board("Prac_1/board1.txt")
+tablero = Board("Prac_1/board1.txt", (0,0), (3,3))
 
-agente = Agent([0,0],tablero)
+agente = Agent(tablero, )
 tablero.show_board()
 print()
 agente.mover_abajo()

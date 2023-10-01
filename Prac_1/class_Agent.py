@@ -1,19 +1,21 @@
 from class_Map import Board
 
 class Agent:
-    def __init__(self,pos_inicial,tablero):
+    def __init__(self,tablero):
         self.tablero = tablero
-        self.pos_actual = pos_inicial
+        self.pos_actual = list(getattr(tablero , "board_init"))
         self.value = self.tablero.get_cell_value(self.pos_actual)
         self.value[2] = "X"
         tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],self.value)
 
     def mover_izq(self):
         
+        aux_poz_iz1 = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]) )
+
         if (self.pos_actual[0] ) == 0:
             print("No se puede mover a la izquierda")
             return
-        else:
+        elif (self.tablero.get_cell_value [0] == 1):
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
             self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
@@ -55,13 +57,13 @@ class Agent:
             self.set_pos_actual()
             
     def sensor_knowledge(self):
+        count = 0
         aux = self.pos_actual
         mov_arriba = self.pos_actual [1] - 1
         aux = self.tablero.get_cell_value((self.pos_actual[0],mov_arriba)) 
         if(aux [2] == 1):
             print("Camino anteriormente descubierto")
         else :
-
             aux[2] = "D"
             self.tablero.update_cel_values(self.pos_actual[0], mov_arriba,aux)
         
@@ -103,4 +105,6 @@ class Agent:
         aux = self.tablero.get_cell_value(self.pos_actual)
         aux[2] = "X"
         self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],aux)
+
+
     

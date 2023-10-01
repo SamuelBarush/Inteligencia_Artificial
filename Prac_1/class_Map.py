@@ -7,6 +7,7 @@ class Board:
         self.board_init = value_init
         self.board_end = value_end
 
+        
 
     def read_board(self, file_path):
         board = []
@@ -19,6 +20,17 @@ class Board:
                             row.append([0,0,0]) # 0 = Es muro ,  1 es camino
                         elif cell == '1':
                             row.append([1,0,0]) 
+                        elif cell == '2':
+                            row.append([2,0,0]) 
+                        elif cell == '3':
+                            row.append([3,0,0]) 
+                        elif cell == '4':
+                            row.append([4,0,0]) 
+                        elif cell == '5':
+                            row.append([5,0,0]) 
+                        elif cell == '6':
+                            row.append([6,0,0]) 
+                        
                         else:
                             row.append((int(cell), 'white'))  # Default color for unknown values
                     board.append(row)
@@ -32,6 +44,7 @@ class Board:
         col	= pos_row
         if 0 <= pos_row < len(self.board_data) and 0 <= pos_col < len(self.board_data[0]) and len(values) == 3:
             self.board_data[row][col] = values
+            
         else:
             print("Invalid position or values")
 
@@ -48,3 +61,5 @@ class Board:
         else:
             print("Invalid coordinates")
             return None  # You can choose to return a default value or raise an exception instead of None
+
+    

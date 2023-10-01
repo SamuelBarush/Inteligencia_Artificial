@@ -1,5 +1,6 @@
 from class_Map import Board
 from class_Agent import Agent
+from class_Game import Rend
 """
 tablero = Board("Prac_1/board1.txt")
 tablero.show_board()
@@ -12,21 +13,8 @@ tablero.show_board()
 tablero = Board("Prac_1/board1.txt", (1,1), (3,3))
 
 agente = Agent(tablero, )
-tablero.show_board()
-print()
-agente.mover_izq()
-tablero.show_board()
-print()
-agente.mover_der()
-tablero.show_board()
-print()
-agente.sensor_knowledge()
-tablero.show_board()
 
-agente.mover_abajo()
-tablero.show_board()
+juego = Rend ( tablero , agente )
 
-agente.mover_arriba()
-tablero.show_board()
 
 

@@ -1,5 +1,6 @@
 import pygame
 
+
 class Rend:
 
     def __init__(self, tablero, agente, TAMANO_CELDA):
@@ -25,5 +26,9 @@ class Rend:
                 else:
                     color = self.colores[1]  # Si el valor es 1, el color es el segundo de la lista (blanco)
 
-        
                 pygame.draw.rect(ventana, color, (x, y, self.TAMANO_CELDA, self.TAMANO_CELDA))
+
+                # Comprobar si el agente llegó a la meta
+        
+
+        

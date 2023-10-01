@@ -62,4 +62,8 @@ class Board:
             print("Invalid coordinates")
             return None  # You can choose to return a default value or raise an exception instead of None
 
+    def get_init(self):
+        return self.board_init
     
+    def get_fin(self):
+        return self.board_end

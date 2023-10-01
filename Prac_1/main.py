@@ -9,18 +9,24 @@ print("UPDATED")
 tablero.show_board()
 
 """
-tablero = Board("Prac_1/board1.txt", (0,0), (3,3))
+tablero = Board("Prac_1/board1.txt", (1,1), (3,3))
 
 agente = Agent(tablero, )
 tablero.show_board()
 print()
-agente.mover_abajo()
+agente.mover_izq()
 tablero.show_board()
 print()
 agente.mover_der()
 tablero.show_board()
 print()
 agente.sensor_knowledge()
+tablero.show_board()
+
+agente.mover_abajo()
+tablero.show_board()
+
+agente.mover_arriba()
 tablero.show_board()
 
 

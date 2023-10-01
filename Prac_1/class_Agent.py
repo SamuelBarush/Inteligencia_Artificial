@@ -10,51 +10,78 @@ class Agent:
 
     def mover_izq(self):
         
-        aux_poz_iz1 = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]) )
+        aux_poz_iz1 = self.tablero.get_cell_value ((self.pos_actual[0]-1,self.pos_actual[1]) )
+
 
         if (self.pos_actual[0] ) == 0:
             print("No se puede mover a la izquierda")
             return
-        elif (self.tablero.get_cell_value [0] == 1):
+        elif (aux_poz_iz1[0] == 1): # hay muro
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
             self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[0] += -1  
-            self.set_pos_actual()    
+            self.set_pos_actual() 
+        else:
+            print("No se puede mover a la izquierda, hay obstaculo")
+            return 
         
     def mover_der(self):
         
+        aux_poz_der = self.tablero.get_cell_value ((self.pos_actual[0]+1,self.pos_actual[1]) )
+
         if (self.pos_actual[0] ) == 14:
             print("No se puede mover a la derecha")
             return
-        else:
+        elif (aux_poz_der[0] == 1): # hay muro
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
             self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[0] += 1
             self.set_pos_actual() 
-        
+        else:
+            print("No se puede mover a la derecha, hay obstaculo")
+            return 
+
     def mover_arriba(self):
+
+   
+        aux_poz_arr = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]-1) )
+
+
         if (self.pos_actual[1] ) == 0:
             print("No se puede mover arriba")
             return
-        else:
+        elif (aux_poz_arr[0] == 1): # hay muro
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
             self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[1] += -1
             self.set_pos_actual() 
+        else:
+            print("No se puede mover a la arriba, hay obstaculo")
+            return 
+
         
     def mover_abajo(self):
+
+
+        aux_poz_abj = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]+1) )
+
+
+
         if (self.pos_actual[1] ) == 14:
             print("No se puede mover abajo")
             return
-        else:
+        elif (aux_poz_abj[0] == 1): # hay muro
             value = self.tablero.get_cell_value(self.pos_actual) 
             value[2] = 1
             self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
             self.pos_actual[1] += 1
             self.set_pos_actual()
+        else:
+            print("No se puede mover a la abajo, hay obstaculo")
+            return 
             
     def sensor_knowledge(self):
         count = 0

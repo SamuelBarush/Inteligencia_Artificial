@@ -24,8 +24,7 @@ class Agent:
             print("No se puede mover a la izquierda, hay obstaculo")
             return 
         
-    def mover_der(self):
-        
+    def mover_der(self):      
         aux_poz_der = self.tablero.get_cell_value ((self.pos_actual[0]+1,self.pos_actual[1]) )
 
         if (self.pos_actual[0] ) == 14:
@@ -41,11 +40,8 @@ class Agent:
             print("No se puede mover a la derecha, hay obstaculo")
             return 
 
-    def mover_arriba(self):
-
-   
+    def mover_arriba(self):   
         aux_poz_arr = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]-1) )
-
 
         if (self.pos_actual[1] ) == 0:
             print("No se puede mover arriba")
@@ -62,11 +58,7 @@ class Agent:
 
         
     def mover_abajo(self):
-
-
         aux_poz_abj = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]+1) )
-
-
 
         if (self.pos_actual[1] ) == 14:
             print("No se puede mover abajo")
@@ -82,7 +74,6 @@ class Agent:
             return 
             
     def sensor_knowledge(self):
-        count = 0
         aux = self.pos_actual
         mov_arriba = self.pos_actual [1] - 1
         aux = self.tablero.get_cell_value((self.pos_actual[0],mov_arriba)) 

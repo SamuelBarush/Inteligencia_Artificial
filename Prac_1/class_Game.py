@@ -19,7 +19,7 @@ class Rend:
                 # Calcula la posición de la celda en la ventana
                 x = columna * self.TAMANO_CELDA  # La posición horizontal se multiplica por el tamaño de la celda
                 y = fila * self.TAMANO_CELDA     # La posición vertical se multiplica por el tamaño de la celda
-
+                
                 # Determina el color de la celda en función de su valor
                 if celda[0] == 0:
                     color = self.colores[0]  # Si el valor es 0, el color es el primero de la lista (negro)
@@ -27,8 +27,6 @@ class Rend:
                     color = self.colores[1]  # Si el valor es 1, el color es el segundo de la lista (blanco)
 
                 pygame.draw.rect(ventana, color, (x, y, self.TAMANO_CELDA, self.TAMANO_CELDA))
-
-                # Comprobar si el agente llegó a la meta
         
 
         

@@ -13,7 +13,7 @@ TAMANO_CELDA = 30
 
 # Crear una instancia de la clase Board con el archivo deseado
 archivo_tablero = "Prac_1/board1.txt"
-tablero = Board(archivo_tablero, [1, 1], [3, 3])
+tablero = Board(archivo_tablero, [1, 1], [14, 13])
 
 # Crear una instancia de la clase Agent con el tablero y el tipo Monkey
 agente = Agent(tablero)
@@ -25,16 +25,14 @@ rend = Rend(tablero, agente, TAMANO_CELDA)
 ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
 pygame.display.set_caption("Dibujando Tablero")
 
-tod_imagen = pygame.image.load("TOD.jpg")
-bola_imagen = pygame.image.load("bola.png")  # Carga la imagen de la bola
-final_imagen = pygame.image.load("final.png")  # Carga la imagen de la meta
+inicio_imagen = pygame.image.load("green.png")
+player_imagen = pygame.image.load("player.png")  # Carga la imagen de la bola
+final_imagen = pygame.image.load("red.png")  # Carga la imagen de la meta
 
-nueva_ancho = 25  # Ancho de la celda
-nueva_alto = 25  # Alto de la celda
 
-tod_imagen = pygame.transform.scale(tod_imagen, (nueva_ancho, nueva_alto))
-bola_imagen = pygame.transform.scale(bola_imagen, (nueva_ancho, nueva_alto))
-final_imagen = pygame.transform.scale (final_imagen, (35, 35))
+inicio_imagen = pygame.transform.scale(inicio_imagen, (30, 30))
+player_imagen = pygame.transform.scale(player_imagen, (30, 30))
+final_imagen = pygame.transform.scale (final_imagen, (30, 30))
 
 # Bucle principal
 ejecutando = True
@@ -57,7 +55,7 @@ while ejecutando:
             pygame.quit()  # Cerrar Pygame
             print("")
             print("..........................................................")
-            print("\tFelicidades, llegaste a la meta")
+            print("\tFelicidades, llegaste a la meta\t")
             print("..........................................................")
             print("")
             break
@@ -66,9 +64,9 @@ while ejecutando:
     rend.dibujar_mapa(ventana)
 
     ventana.blit(final_imagen, (tablero.get_fin()[0] * TAMANO_CELDA, tablero.get_fin()[1] * TAMANO_CELDA))
-    ventana.blit(tod_imagen,(tablero.get_init()[0]* TAMANO_CELDA, tablero.get_init()[1] * TAMANO_CELDA))
+    ventana.blit(inicio_imagen,(tablero.get_init()[0]* TAMANO_CELDA, tablero.get_init()[1] * TAMANO_CELDA))
     # Dibujar la bola en la posición actual del agente
-    ventana.blit(bola_imagen, (agente.pos_actual[0] * TAMANO_CELDA, agente.pos_actual[1] * TAMANO_CELDA))
+    ventana.blit(player_imagen, (agente.pos_actual[0] * TAMANO_CELDA, agente.pos_actual[1] * TAMANO_CELDA))
 
 
     pygame.display.update()  # Agregar esta línea para actualizar la ventana

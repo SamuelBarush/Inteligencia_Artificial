@@ -13,7 +13,7 @@ TAMANO_CELDA = 30
 
 # Crear una instancia de la clase Board con el archivo deseado
 archivo_tablero = "Prac_1/board1.txt"
-tablero = Board(archivo_tablero, [1, 1], [14, 13])
+tablero = Board(archivo_tablero, [1,9], [1,2])
 
 # Crear una instancia de la clase Agent con el tablero y el tipo Monkey
 agente = Agent(tablero)

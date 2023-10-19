@@ -25,7 +25,15 @@ class Rend:
                 value = celda[0]  # Assuming that the value is the first element of the cell's data
                 discovered = celda[2]  # Assuming that the discovery status is the third element of the cell's data
 
-                if discovered == "D":
+                # Check if the cell is the initial or end point
+                is_initial_point = (fila, columna) == self.tablero.board_init
+                is_end_point = (fila, columna) == self.tablero.board_end
+
+                if is_initial_point:
+                    color = (255, 0, 0)  # Set the color to red for the initial point
+                elif is_end_point:
+                    color = (0, 255, 0)  # Set the color to green for the end point
+                elif discovered == "D":
                     color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
                 else:
                     color = (0, 0, 0)  # Set the color to black for undiscovered cells

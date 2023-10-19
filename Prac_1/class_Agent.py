@@ -27,16 +27,14 @@ class Agent:
 
             # Update the agent's position
             self.pos_actual[0] -= 1
-            self.set_pos_actual()
+            self.draw_pos_actual()
 
             # Update the agent's knowledge
             self.sensor_knowledge()
         else:
             print("No se puede mover a la izquierda, no hay un camino válido")
             return
-
-
-            
+  
     def mover_der(self):
         # Get the cell to the right
         aux_poz_der = self.tablero.get_cell_value((self.pos_actual[0] + 1, self.pos_actual[1]))
@@ -55,7 +53,7 @@ class Agent:
 
             # Update the agent's position
             self.pos_actual[0] += 1
-            self.set_pos_actual()
+            self.draw_pos_actual()
 
             # Update the agent's knowledge
             self.sensor_knowledge()
@@ -81,7 +79,7 @@ class Agent:
 
             # Update the agent's position
             self.pos_actual[1] -= 1
-            self.set_pos_actual()
+            self.draw_pos_actual()
 
             # Update the agent's knowledge
             self.sensor_knowledge()
@@ -107,15 +105,13 @@ class Agent:
 
             # Update the agent's position
             self.pos_actual[1] += 1
-            self.set_pos_actual()
+            self.draw_pos_actual()
 
             # Update the agent's knowledge
             self.sensor_knowledge()
         else:
             print("No se puede mover abajo, no hay un camino válido")
             return
-
-
 
     def sensor_knowledge(self):
         # Check the cell above
@@ -150,14 +146,18 @@ class Agent:
                 aux_d[2] = "D"
                 self.tablero.update_cel_values(mov_izq, self.pos_actual[1], aux_d)
 
-
     def show_pos_actual(self):
         print(self.pos_actual)
         
     def pos_actual(self):
         return self.pos_actual
     
-    def set_pos_actual(self):
+    def set_pos_actual(self,pos):
+        
+        self.pos_actual = pos
+        self.sensor_knowledge()
+        
+    def draw_pos_actual(self):
         aux = self.tablero.get_cell_value(self.pos_actual)
         aux[2] = "X"
         self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],aux)
@@ -194,6 +194,18 @@ class Agent:
     
     def show_current_cost(self):
         print("the current cost is: {}".format(self.cost_counter))
+
+    def get_cost_values(self):
+        # Define and return the cost values based on the agent's type
+        cost_values = {
+            0: self.mountain,
+            1: self.forest,
+            2: self.water,
+            3: self.sand,
+            4: self.earth,
+            # Add more cost values as needed for your agent type
+        }
+        return cost_values
 
 class Monkey(Agent):
     def __init__(self, tablero):

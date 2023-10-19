@@ -2,6 +2,9 @@ class AStar:
     def __init__(self, board, agent):
         self.board = board
         self.agent = agent
+        self.explored_nodes = set()
+        self.paths_to_nodes = {}
+
 
     def heuristic(self, node, goal):
         x1, y1 = node
@@ -18,46 +21,45 @@ class AStar:
             return agent_costs[cell_type] + abs(x2 - x1) + abs(y2 - y1)
         else:
             return float('inf')
+    
     def astar_search(self, start, goal):
         open_set = [tuple(start)]
-        closed_set = set()
         came_from = {}
 
-        g_score = {tuple(start): float('inf')}  # Convert 'start' to a tuple here
-        g_score[tuple(start)] = 0
-
-        f_score = {tuple(start): float('inf')}  # Convert 'start' to a tuple here
-        f_score[tuple(start)] = self.heuristic(start, goal)
+        g_score = {tuple(start): 0}
+        f_score = {tuple(start): self.heuristic(start, goal)}
 
         while open_set:
-            current = min(open_set, key=lambda node: f_score[node])  # Remove tuple() here
+            current = min(open_set, key=lambda node: f_score[node])
 
             if current == tuple(goal):
                 path = [current]
                 while current in came_from:
                     current = came_from[current]
                     path.insert(0, current)
+                self.paths_to_nodes[tuple(goal)] = path  # Store the path to the goal node
                 return path
 
             open_set.remove(current)
-            closed_set.add(current)
+            self.explored_nodes.add(current)
 
             for neighbor in self.get_neighbors(list(current)):
-                if neighbor in closed_set:
+                if neighbor in self.explored_nodes:
                     continue
 
                 tentative_g_score = g_score[current] + self.distance(list(current), neighbor)
 
                 if neighbor not in open_set:
-                    open_set.append(neighbor)  # Remove tuple() here
+                    open_set.append(neighbor)
                 elif tentative_g_score >= g_score[neighbor]:
                     continue
 
-                came_from[neighbor] = current  # Remove tuple() here
+                came_from[neighbor] = current
                 g_score[neighbor] = tentative_g_score
                 f_score[neighbor] = g_score[neighbor] + self.heuristic(neighbor, goal)
 
         return None
+
 
     def get_neighbors(self, node):
         neighbors = []
@@ -81,3 +83,9 @@ class AStar:
             cell_type = self.board.get_cell_value(neighbor)[0]
             return cell_type != 0
         return False
+
+    def get_explored_nodes(self):
+        return list(self.explored_nodes)
+
+    def get_path_to_node(self, node):
+        return self.paths_to_nodes.get(tuple(node), [])

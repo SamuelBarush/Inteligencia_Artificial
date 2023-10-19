@@ -17,19 +17,19 @@ class Board:
                     row = []
                     for cell in line.strip().split(','):
                         if cell == '0':
-                            row.append([0,0,0]) # 0 = Es muro ,  1 es camino
+                            row.append([0,0,0,'']) # 0 = Es muro ,  1 es camino
                         elif cell == '1':
-                            row.append([1,0,0]) 
+                            row.append([1,0,0,'']) 
                         elif cell == '2':
-                            row.append([2,0,0]) 
+                            row.append([2,0,0,'']) 
                         elif cell == '3':
-                            row.append([3,0,0]) 
+                            row.append([3,0,0,'']) 
                         elif cell == '4':
-                            row.append([4,0,0]) 
+                            row.append([4,0,0,'']) 
                         elif cell == '5':
-                            row.append([5,0,0]) 
+                            row.append([5,0,0,'']) 
                         elif cell == '6':
-                            row.append([6,0,0]) 
+                            row.append([6,0,0,'']) 
                         
                         else:
                             row.append((int(cell), 'white'))  # Default color for unknown values

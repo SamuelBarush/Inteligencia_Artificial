@@ -27,7 +27,7 @@ class Rend:
 
                 # Check if the cell is the initial or end point
                 is_initial_point = (fila, columna) == self.tablero.board_init
-                is_end_point = (fila, columna) == self.tablero.board_end
+                is_end_point = (columna, fila) == self.tablero.board_end
 
                 if is_initial_point:
                     color = (255, 0, 0)  # Set the color to red for the initial point

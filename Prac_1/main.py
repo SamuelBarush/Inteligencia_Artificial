@@ -12,7 +12,7 @@ ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
 # Crear una instancia de la clase Board con el archivo deseado
-archivo_tablero = "Prac_1/board1.txt"
+archivo_tablero = "/home/ed/Documents/GitHub/Inteligencia_Artificial/Prac_1/board1.txt"
 tablero = Board(archivo_tablero, (1, 1), (3, 3))
 
 # Crear una instancia de la clase Agent con el tablero y el tipo Monkey
@@ -25,10 +25,10 @@ rend = Rend(tablero, agente, TAMANO_CELDA)
 ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
 pygame.display.set_caption("Dibujando Tablero")
 
-bola_imagen = pygame.image.load("bola.png")  # Carga la imagen de la bola
+player_imagen = pygame.image.load("/home/ed/Documents/GitHub/Inteligencia_Artificial/monkey.jpeg")  # Carga la imagen 
 nueva_ancho = 25  # Ancho de la celda
 nueva_alto = 25  # Alto de la celda
-bola_imagen = pygame.transform.scale(bola_imagen, (nueva_ancho, nueva_alto))
+player_imagen = pygame.transform.scale(player_imagen, (nueva_ancho, nueva_alto))
 
 
 # Bucle principal
@@ -51,7 +51,7 @@ while ejecutando:
     rend.dibujar_mapa(ventana)
 
     # Dibujar la bola en la posición actual del agente
-    ventana.blit(bola_imagen, (agente.pos_actual[0] * TAMANO_CELDA, agente.pos_actual[1] * TAMANO_CELDA))
+    ventana.blit(player_imagen, (agente.pos_actual[0] * TAMANO_CELDA, agente.pos_actual[1] * TAMANO_CELDA))
 
     pygame.display.update()  # Agregar esta línea para actualizar la ventana
 

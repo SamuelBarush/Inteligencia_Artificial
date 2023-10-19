@@ -9,99 +9,120 @@ class Agent:
         tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],self.value)
         self.cost_counter = int()
    
-
-
     def mover_izq(self):
-        
-        aux_poz_iz1 = self.tablero.get_cell_value ((self.pos_actual[0]-1,self.pos_actual[1]) )
+        # Get the cell to the left
+        aux_poz_iz1 = self.tablero.get_cell_value((self.pos_actual[0] - 1, self.pos_actual[1]))
 
-
-        if (self.pos_actual[0] ) == 0:
+        # Check if the agent is at the leftmost boundary
+        if self.pos_actual[0] == 0:
             print("No se puede mover a la izquierda")
             return
-        elif (aux_poz_iz1[0] == 1): # hay muro
-            value = self.tablero.get_cell_value(self.pos_actual) 
-            value[2] = 1
-            self.cost_counter += aux_poz_iz1[1] 
-            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
-            self.pos_actual[0] += -1  
-            self.set_pos_actual() 
+
+        # Check if the cell to the left is a valid path (value other than 0)
+        if aux_poz_iz1 is not None and aux_poz_iz1[0] != 0:
+            # Mark the current cell as visited
+            value = self.tablero.get_cell_value(self.pos_actual)
+            value[2] = "D"
+            self.tablero.update_cel_values(self.pos_actual[0], self.pos_actual[1], value)
+
+            # Update the agent's position
+            self.pos_actual[0] -= 1
+            self.set_pos_actual()
+
+            # Update the agent's knowledge
             self.sensor_knowledge()
         else:
-            print("No se puede mover a la izquierda, hay obstaculo")
-            return 
-        
-    def mover_der(self):
-        
-        aux_poz_der = self.tablero.get_cell_value ((self.pos_actual[0]+1,self.pos_actual[1]) )
+            print("No se puede mover a la izquierda, no hay un camino válido")
+            return
 
-        if (self.pos_actual[0] ) == 14:
+
+            
+    def mover_der(self):
+        # Get the cell to the right
+        aux_poz_der = self.tablero.get_cell_value((self.pos_actual[0] + 1, self.pos_actual[1]))
+
+        # Check if the agent is at the rightmost boundary
+        if self.pos_actual[0] == 14:
             print("No se puede mover a la derecha")
             return
-        elif (aux_poz_der[0] == 1): # hay muro
-            value = self.tablero.get_cell_value(self.pos_actual) 
-            value[2] = 1
-            self.cost_counter += aux_poz_der[1] 
-            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
+
+        # Check if the cell to the right is a valid path (value other than 0)
+        if aux_poz_der is not None and aux_poz_der[0] != 0:
+            # Mark the current cell as visited
+            value = self.tablero.get_cell_value(self.pos_actual)
+            value[2] = "D"
+            self.tablero.update_cel_values(self.pos_actual[0], self.pos_actual[1], value)
+
+            # Update the agent's position
             self.pos_actual[0] += 1
-            self.set_pos_actual() 
+            self.set_pos_actual()
+
+            # Update the agent's knowledge
             self.sensor_knowledge()
         else:
-            print("No se puede mover a la derecha, hay obstaculo")
-            return 
+            print("No se puede mover a la derecha, no hay un camino válido")
+            return
 
     def mover_arriba(self):
+        # Get the cell above
+        aux_poz_arr = self.tablero.get_cell_value((self.pos_actual[0], self.pos_actual[1] - 1))
 
-   
-        aux_poz_arr = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]-1) )
-
-
-        if (self.pos_actual[1] ) == 0:
+        # Check if the agent is at the topmost boundary
+        if self.pos_actual[1] == 0:
             print("No se puede mover arriba")
             return
-        elif (aux_poz_arr[0] == 1): # hay muro
-            value = self.tablero.get_cell_value(self.pos_actual) 
-            value[2] = 1
-            self.cost_counter += aux_poz_arr[1] 
-            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
-            self.pos_actual[1] += -1
-            self.set_pos_actual() 
+
+        # Check if the cell above is a valid path (value other than 0)
+        if aux_poz_arr is not None and aux_poz_arr[0] != 0:
+            # Mark the current cell as visited
+            value = self.tablero.get_cell_value(self.pos_actual)
+            value[2] = "D"
+            self.tablero.update_cel_values(self.pos_actual[0], self.pos_actual[1], value)
+
+            # Update the agent's position
+            self.pos_actual[1] -= 1
+            self.set_pos_actual()
+
+            # Update the agent's knowledge
             self.sensor_knowledge()
         else:
-            print("No se puede mover a la arriba, hay obstaculo")
-            return 
+            print("No se puede mover arriba, no hay un camino válido")
+            return
 
-        
     def mover_abajo(self):
+        # Get the cell below
+        aux_poz_abj = self.tablero.get_cell_value((self.pos_actual[0], self.pos_actual[1] + 1))
 
-
-        aux_poz_abj = self.tablero.get_cell_value ((self.pos_actual[0],self.pos_actual[1]+1) )
-
-        if (self.pos_actual[1] ) == 14:
+        # Check if the agent is at the bottommost boundary
+        if self.pos_actual[1] == 14:
             print("No se puede mover abajo")
             return
-        elif (aux_poz_abj[0] == 1): #no hay muro
-            value = self.tablero.get_cell_value(self.pos_actual) 
-            value[2] = 1
-            self.cost_counter += aux_poz_abj[1] 
-            self.tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],value)
+
+        # Check if the cell below is a valid path (value other than 0)
+        if aux_poz_abj is not None and aux_poz_abj[0] != 0:
+            # Mark the current cell as visited
+            value = self.tablero.get_cell_value(self.pos_actual)
+            value[2] = "D"
+            self.tablero.update_cel_values(self.pos_actual[0], self.pos_actual[1], value)
+
+            # Update the agent's position
             self.pos_actual[1] += 1
             self.set_pos_actual()
+
+            # Update the agent's knowledge
             self.sensor_knowledge()
         else:
-            print("No se puede mover a la abajo, hay obstaculo")
-            return 
+            print("No se puede mover abajo, no hay un camino válido")
+            return
+
+
 
     def sensor_knowledge(self):
-        count = 0
-
         # Check the cell above
         mov_arriba = self.pos_actual[1] - 1
         aux = self.tablero.get_cell_value((self.pos_actual[0], mov_arriba))
         if aux is not None:
-            if aux[2] == 1:
-                print("Camino anteriormente descubierto")
-            else:
+            if aux[2] != "D":
                 aux[2] = "D"
                 self.tablero.update_cel_values(self.pos_actual[0], mov_arriba, aux)
 
@@ -109,9 +130,7 @@ class Agent:
         mov_abajo = self.pos_actual[1] + 1
         aux_b = self.tablero.get_cell_value((self.pos_actual[0], mov_abajo))
         if aux_b is not None:
-            if aux_b[2] == 1:
-                print("Camino anteriormente descubierto")
-            else:
+            if aux_b[2] != "D":
                 aux_b[2] = "D"
                 self.tablero.update_cel_values(self.pos_actual[0], mov_abajo, aux_b)
 
@@ -119,9 +138,7 @@ class Agent:
         mov_der = self.pos_actual[0] + 1
         aux_c = self.tablero.get_cell_value((mov_der, self.pos_actual[1]))
         if aux_c is not None:
-            if aux_c[2] == 1:
-                print("Camino anteriormente descubierto")
-            else:
+            if aux_c[2] != "D":
                 aux_c[2] = "D"
                 self.tablero.update_cel_values(mov_der, self.pos_actual[1], aux_c)
 
@@ -129,18 +146,16 @@ class Agent:
         mov_izq = self.pos_actual[0] - 1
         aux_d = self.tablero.get_cell_value((mov_izq, self.pos_actual[1]))
         if aux_d is not None:
-            if aux_d[2] == 1:
-                print("Camino anteriormente descubierto")
-            else:
+            if aux_d[2] != "D":
                 aux_d[2] = "D"
                 self.tablero.update_cel_values(mov_izq, self.pos_actual[1], aux_d)
+
 
     def show_pos_actual(self):
         print(self.pos_actual)
         
     def pos_actual(self):
         return self.pos_actual
-    
     
     def set_pos_actual(self):
         aux = self.tablero.get_cell_value(self.pos_actual)
@@ -152,6 +167,7 @@ class Agent:
             for j in range(14):
                 aux = self.tablero.get_cell_value((i, j))
                 print(f"Current aux for ({i}, {j}): {aux}")
+
                 if aux is not None:
                     if aux[0] == 0:
                         aux[1] = self.mountain
@@ -163,13 +179,14 @@ class Agent:
                         aux[1] = self.sand
                     if aux[0] == 4:
                         aux[1] = self.forest
+                    """
                     if aux[1] == 5:
                         aux[1] = self.swamp
                     if aux[1] == 6:
                         aux[1] = self.snow
+                    """
                     print(aux)
                     self.tablero.update_cel_values(i, j, aux)
-
 
                 else:
                     # Handle the case where get_cell_value returns None for (i, j)
@@ -182,16 +199,31 @@ class Monkey(Agent):
     def __init__(self, tablero):
 
         super().__init__(tablero)
-        self.mountain = 1
+        self.mountain = 0
         self.earth = 2
         self.water = 4
         self.sand = 3
         self.forest = 1
-        self.swamp = 5
-        self.snow = 5
+        #self.swamp = 5
+        #self.snow = 5
         self.set_cost_value()
 
 
+class Octopus (Agent):
+    def __init__(self, tablero):
+        super().__init__(tablero)
+        self.mountain= 0
+        self.earth= 2
+        self.water=1
+        self.sand= 0
+        self.forest= 3
+        #self.swamp = 5
+        #self.snow = 0
+        self.set_cost_value()
+
+
+
+"""
 class Human (Agent):
     def __init__(self, tablero):
         super().__init__(tablero)
@@ -203,21 +235,8 @@ class Human (Agent):
         self.swamp = 5
         self.snow = 0
         self.set_cost_value()
-    
 
-
-
-class Octopus (Agent):
-    def __init__(self, tablero):
-        super().__init__(tablero)
-        self.mountain= 0
-        self.earth= 2
-        self.water=4
-        self.sand= 3
-        self.forest= 1
-        self.swamp = 5
-        self.snow = 0
-        self.set_cost_value()
+        
 
 class Sasquatch (Agent):
     def __init__(self, tablero):
@@ -230,3 +249,7 @@ class Sasquatch (Agent):
         self.swamp = 5
         self.snow = 3
         self.set_cost_value()
+
+"""
+
+

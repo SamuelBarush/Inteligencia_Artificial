@@ -1,9 +1,12 @@
+import graphviz
+
 class AStar:
     def __init__(self, board, agent):
         self.board = board
         self.agent = agent
         self.explored_nodes = set()
         self.paths_to_nodes = {}
+        self.graph = graphviz.Digraph('DecisionTree')
 
 
     def heuristic(self, node, goal):
@@ -32,6 +35,11 @@ class AStar:
         while open_set:
             current = min(open_set, key=lambda node: f_score[node])
 
+            print(f"Exploring node {current} - Cost: {g_score[current]}, Distance: {self.distance(start, current)}, Heuristic: {self.heuristic(current, goal)}")
+
+            # Add the current node to the Graphviz graph with [cost, distance, heuristic] information
+            self.graph.node(str(current), label=f'Pos: {current} \nCost: {g_score[current]}\nDistance: {self.distance(start, current)}\nHeuristic: {self.heuristic(current, goal)}')
+
             if current == tuple(goal):
                 path = [current]
                 while current in came_from:
@@ -58,8 +66,11 @@ class AStar:
                 g_score[neighbor] = tentative_g_score
                 f_score[neighbor] = g_score[neighbor] + self.heuristic(neighbor, goal)
 
+                # Add an edge to the Graphviz graph to represent the exploration path
+                self.graph.edge(str(current), str(neighbor))
+        
+        
         return None
-
 
     def get_neighbors(self, node):
         neighbors = []
@@ -89,3 +100,6 @@ class AStar:
 
     def get_path_to_node(self, node):
         return self.paths_to_nodes.get(tuple(node), [])
+
+    def render_decision_tree(self):
+        return self.graph.render('decision_tree', view=True, format='pdf', engine='dot')

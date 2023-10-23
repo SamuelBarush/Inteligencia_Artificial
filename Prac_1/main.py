@@ -95,6 +95,6 @@ while ejecutando:
     # Add a delay to slow down the movement (in milliseconds)
     pygame.time.delay(500)  # Adjust the delay as needed
 
-
+astar.render_decision_tree()
 
 pygame.quit()

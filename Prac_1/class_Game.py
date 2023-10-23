@@ -39,3 +39,8 @@ class Rend:
                     color = (0, 0, 0)  # Set the color to black for undiscovered cells
 
                 pygame.draw.rect(ventana, color, (x, y, self.TAMANO_CELDA, self.TAMANO_CELDA))
+
+                # Display x and y positions at the top left corner of each cell
+                font = pygame.font.Font(None, 12)  # You can adjust the font size as needed
+                text = font.render(f'{x//self.TAMANO_CELDA} {y//self.TAMANO_CELDA}', True, (0, 0, 0))  # Black text
+                ventana.blit(text, (x, y))

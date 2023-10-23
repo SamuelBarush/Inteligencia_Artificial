@@ -46,7 +46,9 @@ class Board:
             self.board_data[row][col] = values
             
         else:
-            print("Invalid position or values")
+            #print("Invalid position or values") reaches the map limit 
+            return None
+
 
     def show_board(self):
         for row in self.board_data:
@@ -59,7 +61,7 @@ class Board:
         if 0 <= x < len(self.board_data) and 0 <= y < len(self.board_data[0]):
             return self.board_data[y][x]
         else:
-            print("Invalid coordinates")
+            #print("Invalid coordinates")
             return None  # You can choose to return a default value or raise an exception instead of None
 
     

@@ -166,7 +166,6 @@ class Agent:
         for i in range(14):
             for j in range(14):
                 aux = self.tablero.get_cell_value((i, j))
-                print(f"Current aux for ({i}, {j}): {aux}")
 
                 if aux is not None:
                     if aux[0] == 0:
@@ -185,7 +184,7 @@ class Agent:
                     if aux[1] == 6:
                         aux[1] = self.snow
                     """
-                    print(aux)
+                    #print(aux)
                     self.tablero.update_cel_values(i, j, aux)
 
                 else:

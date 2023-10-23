@@ -35,10 +35,7 @@ class AStar:
         while open_set:
             current = min(open_set, key=lambda node: f_score[node])
 
-            print(f"Exploring node {current} - Cost: {g_score[current]}, Distance: {self.distance(start, current)}, Heuristic: {self.heuristic(current, goal)}")
-
-            # Add the current node to the Graphviz graph with [cost, distance, heuristic] information
-            self.graph.node(str(current), label=f'Pos: {current} \nCost: {g_score[current]}\nDistance: {self.distance(start, current)}\nHeuristic: {self.heuristic(current, goal)}')
+            self.graph.node(str(current), label=f'Pos: {current}\n[g: {g_score[current]}, h: {self.heuristic(current, goal)}, f: {g_score[current] + self.heuristic(current, goal)}]')
 
             if current == tuple(goal):
                 path = [current]
@@ -102,4 +99,5 @@ class AStar:
         return self.paths_to_nodes.get(tuple(node), [])
 
     def render_decision_tree(self):
+        print("created")
         return self.graph.render('decision_tree', view=True, format='pdf', engine='dot')

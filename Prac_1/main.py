@@ -4,10 +4,18 @@ from class_Algorithms import *
 import pygame
 from class_Map import Board
 from class_Game import Rend
-#from class_Astar import AStar
 import time 
 
 
+"""
+GLOBAL SETTINGS
+"""
+
+# Metrics
+START = (1,1)
+GOAL = (14,14)
+
+# priority
 RIGHT = (0, -1)
 LEFT = (0, 1)
 DOWN = (1, 0)
@@ -15,25 +23,38 @@ UP = (-1, 0)
 
 PRIORITY = [RIGHT,LEFT,UP,DOWN ]
 
+#DepthFirstSearch = 1
+#BreathFirtSearch = 0
+
 USING_ALGORITHM = 0
-"""
-DepthFirstSearch = 1
-BreathFirtSearch = 0
-"""
 
-
-
-# Initialize Pygame
-pygame.init()
 
 # Window size and cell size
 ANCHO_VENTANA = 800
 ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
-# Create an instance of the Board class with the desired file
-archivo_tablero = "/home/ed/Documents/GitHub/Inteligencia_Artificial/Prac_1/board.txt"
-tablero = Board(archivo_tablero, (1, 1), (14, 14))
+# Movement
+SPEED = 5
+
+# Board file
+archivo_tablero = "/home/ed/Documents/GitHub/Inteligencia_Artificial/Prac_1/board1.txt"
+
+# player file
+player_file = "/home/ed/Documents/GitHub/Inteligencia_Artificial/octopus.png"
+
+# graph path
+graph_path = "search_graph.pdf"
+
+"""
+--- END SETTINGS
+"""
+
+
+# Initialize Pygame
+pygame.init()
+
+tablero = Board(archivo_tablero, START, GOAL)
 
 # Create an instance of the Agent class with the board and Octopus type
 agente = Octopus(tablero)
@@ -46,7 +67,7 @@ ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
 pygame.display.set_caption("Dibujando Tablero")
 
 # Load the player image and scale it
-player_imagen = pygame.image.load("/home/ed/Documents/GitHub/Inteligencia_Artificial/octopus.png")
+player_imagen = pygame.image.load(player_file)
 nueva_ancho = 25
 nueva_alto = 25
 player_imagen = pygame.transform.scale(player_imagen, (nueva_ancho, nueva_alto))
@@ -55,7 +76,7 @@ player_imagen = pygame.transform.scale(player_imagen, (nueva_ancho, nueva_alto))
 start = tablero.board_init
 goal = tablero.board_end
 
-graph_path = "search_graph.pdf"
+
 
 if USING_ALGORITHM == 0:
     bfs = BreadthFirstSearch(tablero, agente,PRIORITY)
@@ -111,7 +132,7 @@ else:
         ventana.blit(player_imagen, (agente.pos_actual[0] * TAMANO_CELDA, agente.pos_actual[1] * TAMANO_CELDA))
 
         pygame.display.update()
-        pygame.time.delay(100)  # Adjust the delay as needed
+        pygame.time.delay(SPEED)  # Adjust the delay as needed
 
 # Ensure that you call pygame.quit() at the end of the script.
 pygame.quit()

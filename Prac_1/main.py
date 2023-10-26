@@ -8,14 +8,14 @@ from class_Game import Rend
 import time 
 
 
-LEFT = (0, -1)
-RIGHT = (0, 1)
+RIGHT = (0, -1)
+LEFT = (0, 1)
 DOWN = (1, 0)
 UP = (-1, 0)
 
-PRIORITY = [LEFT,RIGHT,UP,DOWN ]
+PRIORITY = [RIGHT,LEFT,UP,DOWN ]
 
-USING_ALGORITHM = 0
+USING_ALGORITHM = 1
 """
 DepthFirstSearch = 1
 BreathFirtSearch = 0
@@ -64,11 +64,13 @@ else:
     path = bfs.dfs_search(start, goal)
 
 
-# Check if a path was found
 if path is None:
     print("No path found.")
 else:
+    path, decisions = path
     print(path)
+    print(decisions)
+
     # Bucle principal
     ejecutando = True
     path_index = 0  # Initialize the index for the path
@@ -87,8 +89,15 @@ else:
             next_position = path[path_index]
             agente.set_pos_actual(next_position)
             path_index += 1
+
+            if isinstance(decisions, list) and path_index < len(decisions):
+                decision = decisions[path_index - 1]
+                print(f"Decision for {next_position}: {decision}")
+            elif isinstance(decisions, dict) and next_position in decisions:
+                decision = decisions[next_position]
+                print(f"Decision for {next_position}: {decision}")
+
         else:
-           
             print("Reached the goal!")
             time.sleep(10000)
 

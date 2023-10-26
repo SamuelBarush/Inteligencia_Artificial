@@ -5,21 +5,49 @@ from class_Map import Board
 from class_Game import Rend
 from class_Astar import AStar 
 
-# Initialize Pygame
-pygame.init()
+
+"""
+GLOBAL SETTINGS
+"""
+# Select AGENT_TYPE
+# Monkey 0
+# Octopus 1
+AGENT_TYPE = 0
+
+# Metrics
+START = (1,1)
+GOAL = (14,14)
 
 # Window size and cell size
 ANCHO_VENTANA = 800
 ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
-# Create an instance of the Board class with the desired file
+# Movement
+SPEED = 5
+
+# Board file
 archivo_tablero = "/home/ed/Documents/GitHub/Inteligencia_Artificial/Prac_1/board1.txt"
-tablero = Board(archivo_tablero, (1, 1), (14, 14))
+
+"""
+--- END SETTINGS
+"""
+
+
+# Initialize Pygame
+pygame.init()
+
+# Create an instance of the Board class with the desired file
+
+tablero = Board(archivo_tablero, START, GOAL)
 
 # Create an instance of the Agent class with the board and Monkey type
-#agente = Monkey(tablero)
-agente = Octopus(tablero)
+if AGENT_TYPE == 0:
+    agente = Monkey(tablero)
+    player_imagen = pygame.image.load("/home/ed/Documents/GitHub/Inteligencia_Artificial/monkey.jpeg")
+else:
+    agente = Octopus(tablero)
+    player_imagen = pygame.image.load("/home/ed/Documents/GitHub/Inteligencia_Artificial/octopus.png")
 
 # Create an instance of the Rend class with the board and agent
 rend = Rend(tablero, agente, TAMANO_CELDA)
@@ -29,8 +57,7 @@ ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
 pygame.display.set_caption("Dibujando Tablero")
 
 # Load the player image and scale it
-#player_imagen = pygame.image.load("/home/ed/Documents/GitHub/Inteligencia_Artificial/monkey.jpeg")
-player_imagen = pygame.image.load("/home/ed/Documents/GitHub/Inteligencia_Artificial/octopus.png")
+
 nueva_ancho = 25
 nueva_alto = 25
 player_imagen = pygame.transform.scale(player_imagen, (nueva_ancho, nueva_alto))
@@ -79,7 +106,7 @@ while ejecutando:
     pygame.display.update()
 
     # Add a delay to slow down the movement (in milliseconds)
-    pygame.time.delay(100)  # Adjust the delay as needed
+    pygame.time.delay(SPEED)  # Adjust the delay as needed
 
 astar.render_decision_tree()
 

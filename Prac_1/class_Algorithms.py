@@ -9,25 +9,25 @@ class BreadthFirstSearch:
         self.priority = priority
 
     def bfs_search(self, start, goal):
-        print("calculation started")
         open_set = deque([start])
         came_from = {}
-
+        
         while open_set:
             current = open_set.popleft()
             print("Current Node:", current)  # Debug: Print the current node being processed
 
             if current == goal:
-                return self.reconstruct_path(came_from, goal)
-            
+                return self.reconstruct_path(came_from,self.board.board_init, goal)
+                
             for neighbor in self.get_neighbors(current):
                 if neighbor not in came_from:
                     open_set.append(neighbor)
                     came_from[neighbor] = current
-            
+
             print("Open Set Length:", len(open_set))  # Debug: Print the length of the open set
 
         return None
+
 
 
     def is_valid_neighbor(self, neighbor):
@@ -50,13 +50,15 @@ class BreadthFirstSearch:
 
         return neighbors
 
-    def reconstruct_path(self, came_from, goal):
+    def reconstruct_path(self, came_from, start, goal):
         path = [goal]
         current = goal
-        while current in came_from:
+        while current != start:
             current = came_from[current]
-            path.insert(0, current)
+            path.append(current)
+        path.reverse()
         return path
+
 
 class DepthFirstSearch:
     def __init__(self, board, priority):
@@ -65,7 +67,7 @@ class DepthFirstSearch:
         self.priority = priority
         
 
-    def dfs(self, start, goal):
+    def dfs_search(self, start, goal):
         stack = deque([start])
         came_from = {}
 

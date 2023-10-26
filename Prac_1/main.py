@@ -4,7 +4,24 @@ from class_Algorithms import *
 import pygame
 from class_Map import Board
 from class_Game import Rend
-from class_Astar import AStar
+#from class_Astar import AStar
+import time 
+
+
+LEFT = (0, -1)
+RIGHT = (0, 1)
+DOWN = (1, 0)
+UP = (-1, 0)
+
+PRIORITY = [LEFT,RIGHT,UP,DOWN ]
+
+USING_ALGORITHM = 0
+"""
+DepthFirstSearch = 1
+BreathFirtSearch = 0
+"""
+
+
 
 # Initialize Pygame
 pygame.init()
@@ -15,7 +32,7 @@ ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
 # Create an instance of the Board class with the desired file
-archivo_tablero = "/home/ed/Documents/GitHub/Inteligencia_Artificial/Prac_1/board1.txt"
+archivo_tablero = "/home/ed/Documents/GitHub/Inteligencia_Artificial/Prac_1/board.txt"
 tablero = Board(archivo_tablero, (1, 1), (14, 14))
 
 # Create an instance of the Agent class with the board and Octopus type
@@ -38,15 +55,20 @@ player_imagen = pygame.transform.scale(player_imagen, (nueva_ancho, nueva_alto))
 start = tablero.board_init
 goal = tablero.board_end
 
-# Create BFS instance and compute the path
-priority = [(0, -1), (0, 1), (1, 0), (-1, 0)]
-bfs = BreadthFirstSearch(tablero, agente, priority)
-path = bfs.bfs_search(start, goal)
+
+if USING_ALGORITHM == 0:
+    bfs = BreadthFirstSearch(tablero, agente,PRIORITY)
+    path = bfs.bfs_search(start, goal)
+else:
+    bfs = DepthFirstSearch(tablero, PRIORITY)
+    path = bfs.dfs_search(start, goal)
+
 
 # Check if a path was found
 if path is None:
     print("No path found.")
 else:
+    print(path)
     # Bucle principal
     ejecutando = True
     path_index = 0  # Initialize the index for the path
@@ -66,7 +88,9 @@ else:
             agente.set_pos_actual(next_position)
             path_index += 1
         else:
+           
             print("Reached the goal!")
+            time.sleep(10000)
 
         rend.dibujar_mapa(ventana)
 

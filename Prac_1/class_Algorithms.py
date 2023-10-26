@@ -1,5 +1,7 @@
 from collections import deque
 import class_Map
+import pydot
+from PIL import Image
 
 class BreadthFirstSearch:
     def __init__(self, board, agent, priority):
@@ -82,26 +84,44 @@ class BreadthFirstSearch:
             return (neighbor, "DOWN")
         else:
             return (neighbor, "UNKNOWN")
+    def visualize_graph(self, graph_path):
+        graph = pydot.Dot(graph_type='graph')
 
+        for node in self.decisions:
+            label = f"({node[0]}, {node[1]})\n{self.decisions[node][1]}"
+            graph.add_node(pydot.Node(str(node), label=label))
+
+        for node in self.decisions:
+            current_x, current_y = node
+            for dx, dy in self.priority:
+                neighbor_x, neighbor_y = current_x + dx, current_y + dy
+                neighbor = (neighbor_x, neighbor_y)
+
+                if neighbor in self.decisions:
+                    graph.add_edge(pydot.Edge(str(node), str(neighbor)))
+
+        graph.write(graph_path, format='pdf')
+        return graph
 
 class DepthFirstSearch:
     def __init__(self, board, priority):
         self.board = board
         self.visited = set()
         self.priority = priority
+        self.decisions = {}
         
 
     def dfs_search(self, start, goal):
         stack = deque([start])
         came_from = {}
-        decisions = {}  # Create a decisions dictionary to store neighbor decisions
+        #decisions = {}  # Create a decisions dictionary to store neighbor decisions
 
         while stack:
             current = stack.pop()
 
             if current == goal:
                 path = self.reconstruct_path(came_from, start, goal)
-                return path, decisions
+                return path, self.decisions
 
             if current in self.visited:
                 continue
@@ -114,7 +134,7 @@ class DepthFirstSearch:
                     came_from[neighbor] = current
 
                     # Store the decision for the neighbor
-                    decisions[neighbor] = self.get_decision(current, neighbor)
+                    self.decisions[neighbor] = self.get_decision(current, neighbor)
 
         return None
     
@@ -161,3 +181,23 @@ class DepthFirstSearch:
             return (neighbor, "DOWN")
         else:
             return (neighbor, "UNKNOWN")
+
+
+    def visualize_graph(self, graph_path):
+        graph = pydot.Dot(graph_type='graph')
+
+        for node in self.decisions:
+            label = f"({node[0]}, {node[1]})\n{self.decisions[node][1]}"
+            graph.add_node(pydot.Node(str(node), label=label))
+
+        for node in self.decisions:
+            current_x, current_y = node
+            for dx, dy in self.priority:
+                neighbor_x, neighbor_y = current_x + dx, current_y + dy
+                neighbor = (neighbor_x, neighbor_y)
+
+                if neighbor in self.decisions:
+                    graph.add_edge(pydot.Edge(str(node), str(neighbor)))
+
+        graph.write(graph_path, format='pdf')
+        return graph

@@ -15,7 +15,7 @@ UP = (-1, 0)
 
 PRIORITY = [RIGHT,LEFT,UP,DOWN ]
 
-USING_ALGORITHM = 1
+USING_ALGORITHM = 0
 """
 DepthFirstSearch = 1
 BreathFirtSearch = 0
@@ -55,13 +55,17 @@ player_imagen = pygame.transform.scale(player_imagen, (nueva_ancho, nueva_alto))
 start = tablero.board_init
 goal = tablero.board_end
 
+graph_path = "search_graph.pdf"
 
 if USING_ALGORITHM == 0:
     bfs = BreadthFirstSearch(tablero, agente,PRIORITY)
     path = bfs.bfs_search(start, goal)
+    graph = bfs.visualize_graph(graph_path)
+    
 else:
-    bfs = DepthFirstSearch(tablero, PRIORITY)
-    path = bfs.dfs_search(start, goal)
+    dfs = DepthFirstSearch(tablero, PRIORITY)
+    path = dfs.dfs_search(start, goal)
+    graph = dfs.visualize_graph(graph_path)
 
 
 if path is None:

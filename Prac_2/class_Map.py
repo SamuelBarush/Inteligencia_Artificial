@@ -17,19 +17,19 @@ class Board:
                     row = []
                     for cell in line.strip().split(','):
                         if cell == '0':
-                            row.append([0,0,0]) # 0 = Es muro ,  1 es camino
+                            row.append([0,0,0,'']) # 0 = Es muro ,  1 es camino
                         elif cell == '1':
-                            row.append([1,0,0]) 
+                            row.append([1,0,0,'']) 
                         elif cell == '2':
-                            row.append([2,0,0]) 
+                            row.append([2,0,0,'']) 
                         elif cell == '3':
-                            row.append([3,0,0]) 
+                            row.append([3,0,0,'']) 
                         elif cell == '4':
-                            row.append([4,0,0]) 
+                            row.append([4,0,0,'']) 
                         elif cell == '5':
-                            row.append([5,0,0]) 
+                            row.append([5,0,0,'']) 
                         elif cell == '6':
-                            row.append([6,0,0]) 
+                            row.append([6,0,0,'']) 
                         
                         else:
                             row.append((int(cell), 'white'))  # Default color for unknown values
@@ -46,7 +46,9 @@ class Board:
             self.board_data[row][col] = values
             
         else:
-            print("Invalid position or values")
+            #print("Invalid position or values") reaches the map limit 
+            return None
+
 
     def show_board(self):
         for row in self.board_data:
@@ -59,11 +61,7 @@ class Board:
         if 0 <= x < len(self.board_data) and 0 <= y < len(self.board_data[0]):
             return self.board_data[y][x]
         else:
-            print("Invalid coordinates")
+            #print("Invalid coordinates")
             return None  # You can choose to return a default value or raise an exception instead of None
 
-    def get_init(self):
-        return self.board_init
     
-    def get_fin(self):
-        return self.board_end

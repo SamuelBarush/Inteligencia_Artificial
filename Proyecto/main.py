@@ -8,9 +8,9 @@ ANCHO_VENTANA = 800
 ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
-TEMPLE = (5,5)
+TEMPLE = (5,4)
 KEY = (3,3)
-PORTAL = (7,7)
+PORTAL = (8,6)
 
 archivo_tablero = "./board1.txt"
 
@@ -61,8 +61,8 @@ pathHumanKeyTemplePortal = astarHuman.astar_search(temple, portal)
 
 
 pathOctopusKey = astarOctopus.astar_search(startOctopus, key)
-#pathOctopusKeyTemple = astarOctopus.astar_search(key, temple)
-#pathOctopusKeyTemplePortal = astarOctopus.astar_search(temple, portal)
+pathOctopusKeyTemple = astarOctopus.astar_search(key, temple)
+pathOctopusKeyTemplePortal = astarOctopus.astar_search(temple, portal)
 
 ejecutar = True
 path_index_HK = 0
@@ -115,6 +115,33 @@ while ejecutar:
                         flag_HKTP = False
                         print("Human Reached the portal!")
             
+    if pathOctopusKey is not None:
+        if (path_index_HK < len(pathOctopusKey)) and (flag_OK == True):
+            next_position = pathOctopusKey[path_index_OK]
+            agent_octopus.set_pos_actual(next_position)
+            path_index_OK += 1
+            if next_position == KEY:
+                flag_OK = False
+                print("Octopus Reached the key!")
+        elif pathOctopusKeyTemple is not None:
+            if (path_index_OKT < len(pathOctopusKeyTemple)) and (flag_OKT == True):
+                next_position = pathOctopusKeyTemple[path_index_OKT]
+                agent_octopus.set_pos_actual(next_position)
+                path_index_OKT += 1
+                if next_position == TEMPLE:
+                    flag_OKT = False
+                    print("Octopus Reached the temple!")
+            elif pathOctopusKeyTemplePortal is not None:
+                print("Camino al Portal")
+                if (path_index_OKTP < len(pathHumanKeyTemplePortal)) and (flag_OKTP == True):
+                    next_position = pathOctopusKeyTemplePortal[path_index_OKTP]
+                    agent_octopus.set_pos_actual(next_position)
+                    path_index_OKTP += 1
+                    print("Camino al Portal")
+                    if next_position == PORTAL:
+                        flag_OKTP = False
+                        print("Octopus Reached the portal!")
+                        
     rend.dibujar_mapa(ventana)
 
     ventana.blit(human_image, (agent_human.pos_actual[0] * TAMANO_CELDA, agent_human.pos_actual[1] * TAMANO_CELDA))

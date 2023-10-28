@@ -50,16 +50,21 @@ startHuman = mapa.board_init_human
 startOctopus = mapa.board_init_octu
 
 pathHumanKey = astarHuman.astar_search(startHuman, key)
-pathHumanKeyTemple = astarHuman.astar_search(key, temple)
-pathHumanKeyTemplePortal = astarHuman.astar_search(temple, portal)
+#pathHumanKeyTemple = astarHuman.astar_search(key, temple)
+#pathHumanKeyTemplePortal = astarHuman.astar_search(temple, portal)
 
 
 pathOctopusKey = astarOctopus.astar_search(startOctopus, key)
-pathOctopusKeyTemple = astarOctopus.astar_search(key, temple)
-pathOctopusKeyTemplePortal = astarOctopus.astar_search(temple, portal)
+#pathOctopusKeyTemple = astarOctopus.astar_search(key, temple)
+#pathOctopusKeyTemplePortal = astarOctopus.astar_search(temple, portal)
 
 ejecutar = True
-path_index = 0
+path_index_HK = 0
+path_index_HKT = 0
+path_index_HKTP = 0
+path_index_OK = 0
+path_index_OKT = 0
+path_index_OKTP = 0
 
 while ejecutar:
     for evento in pygame.event.get():
@@ -72,38 +77,51 @@ while ejecutar:
     ventana.fill((0, 0, 0))
 
     if pathHumanKey is not None:
-        if path_index < len(pathHumanKey):
-            agent_human.pos_actual = pathHumanKey[path_index]
-            path_index += 1
+        if path_index_HK < len(pathHumanKey):
+            agent_human.pos_actual = pathHumanKey[path_index_HK]
+            path_index_HK += 1
         else:
-            path_index = 0
-            pathHumanKey = None
-            if pathHumanKeyTemple is not None:
-                if path_index < len(pathHumanKeyTemple):
-                    agent_human.pos_actual = pathHumanKeyTemple[path_index]
-                    path_index += 1
+            print("Reached the key!")
+            pathHumanKeyTemple = astarHuman.astar_search(key, temple)
+            if path_index_HKT < len(pathHumanKeyTemple):
+                agent_human.pos_actual = pathHumanKeyTemple[path_index_HKT]
+                path_index_HKT += 1
+            else:
+                print("Reached the temple!")
+                pathHumanKeyTemplePortal = astarHuman.astar_search(temple, portal)
+                if path_index_HKTP < len(pathHumanKeyTemplePortal):
+                    agent_human.pos_actual = pathHumanKeyTemplePortal[path_index_HKTP]
+                    path_index_HKTP += 1
                 else:
-                    path_index = 0
-                    pathHumanKeyTemple = None
-                    if pathHumanKeyTemplePortal is not None:
-                        if path_index < len(pathHumanKeyTemplePortal):
-                            agent_human.pos_actual = pathHumanKeyTemplePortal[path_index]
-                            path_index += 1
-                        else:
-                            path_index = 0
-                            pathHumanKeyTemplePortal = None
-                            print("Human Reached the goal!")
-
+                    print("Reached the portal!")
+                    
+    if pathOctopusKey is not None:
+        if path_index_OK < len(pathOctopusKey):
+            agent_octopus.pos_actual = pathOctopusKey[path_index_OK]
+            path_index_OK += 1
+        else:
+            print("Reached the key!")
+            pathOctopusKeyTemple = astarOctopus.astar_search(key, temple)
+            if path_index_OKT < len(pathOctopusKeyTemple):
+                agent_octopus.pos_actual = pathOctopusKeyTemple[path_index_OKT]
+                path_index_OKT += 1
+            else:
+                print("Reached the temple!")
+                pathOctopusKeyTemplePortal = astarOctopus.astar_search(temple, portal)
+                if path_index_OKTP < len(pathOctopusKeyTemplePortal):
+                    agent_octopus.pos_actual = pathOctopusKeyTemplePortal[path_index_OKTP]
+                    path_index_OKTP += 1
+                else:
+                    print("Reached the portal!")              
+            
     rend.dibujar_mapa(ventana)
 
     ventana.blit(human_image, (agent_human.pos_actual[0] * TAMANO_CELDA, agent_human.pos_actual[1] * TAMANO_CELDA))
     ventana.blit(octupus_image, (agent_octopus.pos_actual[0] * TAMANO_CELDA, agent_octopus.pos_actual[1] * TAMANO_CELDA))   
     pygame.display.update()
-    pygame.time.delay(5)
+    pygame.time.delay(500)
 
 astarHuman.render_decision_tree()
 astarOctopus.render_decision_tree()
     
-     
-
 pygame.quit()

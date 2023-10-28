@@ -10,7 +10,7 @@ TAMANO_CELDA = 30
 
 TEMPLE = (5,4)
 KEY = (3,3)
-PORTAL = (7,14)
+PORTAL = (3,14)
 
 archivo_tablero = "./board1.txt"
 
@@ -148,8 +148,10 @@ while ejecutar:
     
     if flag_HK and flag_OK:
         ventana.blit(two_keys_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
-    else:
+    elif not flag_HK and not flag_OK:
         ventana.blit(key_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
+  
+
         
     if flag_HKT and flag_OKT:
         ventana.blit(temple_image,(TEMPLE[0] * TAMANO_CELDA, TEMPLE[1] * TAMANO_CELDA))
@@ -164,7 +166,7 @@ while ejecutar:
         ventana.blit(octupus_image, (agent_octopus.pos_actual[0] * TAMANO_CELDA, agent_octopus.pos_actual[1] * TAMANO_CELDA))   
     
     pygame.display.update()
-    pygame.time.delay(1000)
+    pygame.time.delay(150)
 
 astarHuman.render_decision_tree()
 astarOctopus.render_decision_tree()

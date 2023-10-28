@@ -1,9 +1,10 @@
 import pygame
 
 class Rend:
-    def __init__(self, tablero, agente, TAMANO_CELDA):
+    def __init__(self, tablero, agente1, agente2, TAMANO_CELDA):
         self.tablero = tablero
-        self.agente = agente
+        self.agente1 = agente1
+        self.agente2 = agente2
         self.TAMANO_CELDA = TAMANO_CELDA
         self.colores = {
             0: (128, 128, 128),  # Mountain (Grey)
@@ -24,13 +25,16 @@ class Rend:
                 discovered = celda[2]  # Assuming that the discovery status is the third element of the cell's data
 
                 # Check if the cell is the initial or end point
-                is_initial_point = (fila, columna) == self.tablero.board_init
-                is_end_point = (columna, fila) == self.tablero.board_end
+                is_key_point = (fila, columna) == self.tablero.board_key
+                is_portal_point = (columna, fila) == self.tablero.board_portal
+                is_temple_point = (fila, columna) == self.tablero.board_temple
 
-                if is_initial_point:
+                if is_key_point:
                     color = (255, 0, 0)  # Set the color to red for the initial point
-                elif is_end_point:
+                elif is_portal_point:
                     color = (0, 255, 0)  # Set the color to green for the end point
+                elif is_temple_point:
+                    color = (0, 0, 255)  # Set the color to blue for the end point
                 elif discovered == "D":
                     color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
                 else:

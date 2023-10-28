@@ -26,6 +26,8 @@ human_image = pygame.image.load("./human.png")
 agent_octopus = Octopus(mapa)
 octupus_image = pygame.image.load("./octopus.png")
 
+rend = Rend(mapa, agent_human, agent_octopus, TAMANO_CELDA)
+
 ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
 pygame.display.set_caption("Dibujando Tablero")
 
@@ -64,8 +66,6 @@ while ejecutar:
     ventana.fill((0, 0, 0))
     
     #if (pathHumanKey is not None) and (pathOctopusKey is not None):
-    #    if path_index
-
-
+    rend.dibujar_mapa(ventana)   
 
 pygame.quit()

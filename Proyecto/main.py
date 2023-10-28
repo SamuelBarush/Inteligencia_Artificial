@@ -26,6 +26,9 @@ agent_human = Human(mapa)
 human_image = pygame.image.load("./human.png")
 agent_octopus = Octopus(mapa)
 octupus_image = pygame.image.load("./octopus.png")
+temple_image = pygame.image.load("./temple.png")
+portal_image = pygame.image.load("./portal.png")
+key_image = pygame.image.load("./key.png")
 
 
 rend = Rend(mapa, agent_human, agent_octopus, TAMANO_CELDA)
@@ -39,6 +42,9 @@ nueva_alto = 25
 
 human_image = pygame.transform.scale(human_image, (nueva_ancho, nueva_alto))
 octupus_image = pygame.transform.scale(octupus_image, (nueva_ancho, nueva_alto))
+temple_image = pygame.transform.scale(temple_image, (nueva_ancho, nueva_alto))
+portal_image = pygame.transform.scale(portal_image, (nueva_ancho, nueva_alto))
+key_image = pygame.transform.scale(key_image, (nueva_ancho, nueva_alto))
 
 astarHuman = AStar(mapa, agent_human)
 astarOctopus = AStar(mapa, agent_octopus)
@@ -85,8 +91,9 @@ while ejecutar:
         else:
             print("Reached the key!")
             pathHumanKeyTemple = astarHuman.astar_search(key, temple)
-            if path_index_HKT < len(pathHumanKeyTemple):
-                agent_human.pos_actual = pathHumanKeyTemple[path_index_HKT]
+            if path_index_HKT < len(pathHumanKeyTemple):    #ERROR
+                next_position = pathHumanKeyTemple[path_index_HKT]
+                agent_human.set_pos_actual(next_position)
                 path_index_HKT += 1
             else:
                 print("Reached the temple!")
@@ -120,6 +127,9 @@ while ejecutar:
 
     ventana.blit(human_image, (agent_human.pos_actual[0] * TAMANO_CELDA, agent_human.pos_actual[1] * TAMANO_CELDA))
     ventana.blit(octupus_image, (agent_octopus.pos_actual[0] * TAMANO_CELDA, agent_octopus.pos_actual[1] * TAMANO_CELDA))   
+    ventana.blit(temple_image,(TEMPLE[0] * TAMANO_CELDA, TEMPLE[1] * TAMANO_CELDA))
+    ventana.blit(portal_image,(PORTAL[0] * TAMANO_CELDA, PORTAL[1] * TAMANO_CELDA))
+    ventana.blit(key_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
     pygame.display.update()
     pygame.time.delay(500)
 

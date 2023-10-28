@@ -209,7 +209,7 @@ class Human(Agent):
     def __init__(self, tablero):
         self.pos_actual = list(getattr(tablero , "board_init_human"))
         super().__init__(tablero)
-        self.mountain = 0
+        self.mountain = 10
         self.earth = 1
         self.water = 2
         self.sand = 3
@@ -221,10 +221,10 @@ class Octopus (Agent):
     def __init__(self, tablero):
         self.pos_actual = list(getattr(tablero , "board_init_octu"))
         super().__init__(tablero)
-        self.mountain= 0
+        self.mountain= 10
         self.earth= 4
         self.water=1
-        self.sand= 0
+        self.sand= 10
         self.forest= 3
         self.set_cost_value()
 

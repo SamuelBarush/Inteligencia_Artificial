@@ -10,12 +10,12 @@ TAMANO_CELDA = 30
 
 TEMPLE = (5,4)
 KEY = (3,3)
-PORTAL = (8,6)
+PORTAL = (7,14)
 
 archivo_tablero = "./board1.txt"
 
 HUMAN = (1,1)
-OCTOPUS = (5,7)
+OCTOPUS = (2,2)
 
 pygame.init()
 
@@ -29,6 +29,8 @@ octupus_image = pygame.image.load("./octopus.png")
 temple_image = pygame.image.load("./temple.png")
 portal_image = pygame.image.load("./portal.png")
 key_image = pygame.image.load("./key.png")
+temple_destroid_image = pygame.image.load("./temple_destroid.png")
+two_keys_image = pygame.image.load("./two_keys.png")
 
 
 rend = Rend(mapa, agent_human, agent_octopus, TAMANO_CELDA)
@@ -45,6 +47,8 @@ octupus_image = pygame.transform.scale(octupus_image, (nueva_ancho, nueva_alto))
 temple_image = pygame.transform.scale(temple_image, (nueva_ancho, nueva_alto))
 portal_image = pygame.transform.scale(portal_image, (nueva_ancho, nueva_alto))
 key_image = pygame.transform.scale(key_image, (nueva_ancho, nueva_alto))
+temple_destroid_image = pygame.transform.scale(temple_destroid_image, (nueva_ancho, nueva_alto))
+two_keys_image = pygame.transform.scale(two_keys_image, (nueva_ancho, nueva_alto))
 
 astarHuman = AStar(mapa, agent_human)
 astarOctopus = AStar(mapa, agent_octopus)
@@ -132,27 +136,37 @@ while ejecutar:
                     flag_OKT = False
                     print("Octopus Reached the temple!")
             elif pathOctopusKeyTemplePortal is not None:
-                print("Camino al Portal")
                 if (path_index_OKTP < len(pathHumanKeyTemplePortal)) and (flag_OKTP == True):
                     next_position = pathOctopusKeyTemplePortal[path_index_OKTP]
                     agent_octopus.set_pos_actual(next_position)
                     path_index_OKTP += 1
-                    print("Camino al Portal")
                     if next_position == PORTAL:
                         flag_OKTP = False
                         print("Octopus Reached the portal!")
                         
     rend.dibujar_mapa(ventana)
-
-    ventana.blit(human_image, (agent_human.pos_actual[0] * TAMANO_CELDA, agent_human.pos_actual[1] * TAMANO_CELDA))
-    ventana.blit(octupus_image, (agent_octopus.pos_actual[0] * TAMANO_CELDA, agent_octopus.pos_actual[1] * TAMANO_CELDA))   
-    ventana.blit(temple_image,(TEMPLE[0] * TAMANO_CELDA, TEMPLE[1] * TAMANO_CELDA))
+    
+    if flag_HK and flag_OK:
+        ventana.blit(two_keys_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
+    else:
+        ventana.blit(key_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
+        
+    if flag_HKT and flag_OKT:
+        ventana.blit(temple_image,(TEMPLE[0] * TAMANO_CELDA, TEMPLE[1] * TAMANO_CELDA))
+    else:
+        ventana.blit(temple_destroid_image,(TEMPLE[0] * TAMANO_CELDA, TEMPLE[1] * TAMANO_CELDA))
+        
     ventana.blit(portal_image,(PORTAL[0] * TAMANO_CELDA, PORTAL[1] * TAMANO_CELDA))
-    ventana.blit(key_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
+    
+    if flag_HKTP:
+        ventana.blit(human_image, (agent_human.pos_actual[0] * TAMANO_CELDA, agent_human.pos_actual[1] * TAMANO_CELDA))
+    if flag_OKTP:
+        ventana.blit(octupus_image, (agent_octopus.pos_actual[0] * TAMANO_CELDA, agent_octopus.pos_actual[1] * TAMANO_CELDA))   
+    
     pygame.display.update()
     pygame.time.delay(1000)
 
-#astarHuman.render_decision_tree()
-#astarOctopus.render_decision_tree()
+astarHuman.render_decision_tree()
+astarOctopus.render_decision_tree()
     
 pygame.quit()

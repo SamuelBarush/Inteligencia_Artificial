@@ -24,18 +24,7 @@ class Rend:
                 value = celda[0]  # Assuming that the value is the first element of the cell's data
                 discovered = celda[2]  # Assuming that the discovery status is the third element of the cell's data
 
-                # Check if the cell is the initial or end point
-                is_key_point = (fila, columna) == self.tablero.board_key
-                is_portal_point = (columna, fila) == self.tablero.board_portal
-                is_temple_point = (fila, columna) == self.tablero.board_temple
-
-                if is_key_point:
-                    color = (255, 0, 0)  # Set the color to red for the initial point
-                elif is_portal_point:
-                    color = (0, 255, 0)  # Set the color to green for the end point
-                elif is_temple_point:
-                    color = (0, 0, 255)  # Set the color to blue for the end point
-                elif discovered == "D":
+                if discovered == "D":
                     color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
                 else:
                     color = (0, 0, 0)  # Set the color to black for undiscovered cells

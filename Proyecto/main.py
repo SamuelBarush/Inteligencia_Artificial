@@ -62,6 +62,7 @@ ejecutar = True
 path_index_HK = 0
 path_index_HKT = 0
 path_index_HKTP = 0
+
 path_index_OK = 0
 path_index_OKT = 0
 path_index_OKTP = 0
@@ -78,7 +79,8 @@ while ejecutar:
 
     if pathHumanKey is not None:
         if path_index_HK < len(pathHumanKey):
-            agent_human.pos_actual = pathHumanKey[path_index_HK]
+            next_position = pathHumanKey[path_index_HK]
+            agent_human.set_pos_actual(next_position)
             path_index_HK += 1
         else:
             print("Reached the key!")

@@ -8,14 +8,14 @@ ANCHO_VENTANA = 800
 ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
-TEMPLE = (5,4)
-KEY = (3,3)
-PORTAL = (3,14)
+TEMPLE = (11,3)
+KEY = (14,15)
+PORTAL = (11,10)
 
 archivo_tablero = "./board1.txt"
 
-HUMAN = (1,1)
-OCTOPUS = (2,2)
+HUMAN = (8,3)
+OCTOPUS = (14,12)
 
 pygame.init()
 
@@ -120,7 +120,7 @@ while ejecutar:
                         print("Human Reached the portal!")
             
     if pathOctopusKey is not None:
-        if (path_index_HK < len(pathOctopusKey)) and (flag_OK == True):
+        if (path_index_OK < len(pathOctopusKey)) and (flag_OK == True):
             next_position = pathOctopusKey[path_index_OK]
             agent_octopus.set_pos_actual(next_position)
             path_index_OK += 1
@@ -148,7 +148,7 @@ while ejecutar:
     
     if flag_HK and flag_OK:
         ventana.blit(two_keys_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
-    elif not flag_HK and not flag_OK:
+    elif flag_HK or flag_OK:
         ventana.blit(key_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
   
 

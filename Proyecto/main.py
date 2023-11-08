@@ -11,11 +11,11 @@ ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
 #Coordenadas de los elementos del mapa
-TEMPLE = (11,3)
-KEY = (14,15)
-PORTAL = (11,10)
-HUMAN = (8,3)
-OCTOPUS = (14,12)
+TEMPLE = (10,2)
+KEY = (13,14)
+PORTAL = (10,9)
+HUMAN = (7,2)
+OCTOPUS = (13,11)
 
 #Archivo del mapa
 archivo_tablero = "./board1.txt"
@@ -147,7 +147,7 @@ while ejecutar:
                     flag_OKT = False
                     print("Octopus Reached the temple!")
             elif pathOctopusKeyTemplePortal is not None:
-                if (path_index_OKTP < len(pathHumanKeyTemplePortal)) and (flag_OKTP == True):
+                if (path_index_OKTP < len(pathOctopusKeyTemplePortal)) and (flag_OKTP == True):
                     next_position = pathOctopusKeyTemplePortal[path_index_OKTP]
                     agent_octopus.set_pos_actual(next_position)
                     path_index_OKTP += 1
@@ -178,8 +178,11 @@ while ejecutar:
     
     pygame.display.update()
     pygame.time.delay(150)
+    
+    if flag_HKTP == False and flag_OKTP == False:
+        ejecutar = False
 
-astarHuman.render_decision_tree("human")
-astarOctopus.render_decision_tree("octopus")
+#astarHuman.render_decision_tree("human")
+#astarOctopus.render_decision_tree("octopus")
     
 pygame.quit()

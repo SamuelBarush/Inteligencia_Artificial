@@ -4,27 +4,34 @@ from class_Agent import *
 from class_Astar import AStar 
 import pygame
 
+#Parametros de la ventana
+
 ANCHO_VENTANA = 800
 ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
+#Coordenadas de los elementos del mapa
 TEMPLE = (11,3)
 KEY = (14,15)
 PORTAL = (11,10)
-
-archivo_tablero = "./board1.txt"
-
 HUMAN = (8,3)
 OCTOPUS = (14,12)
 
+#Archivo del mapa
+archivo_tablero = "./board1.txt"
+
 pygame.init()
 
+#Creacion de los mapas para los agentes
+mapaH = Board(archivo_tablero, HUMAN ,KEY, PORTAL , TEMPLE  )
+mapaO = Board(archivo_tablero, OCTOPUS ,KEY, PORTAL , TEMPLE  )
 
-mapa = Board(archivo_tablero, HUMAN , OCTOPUS ,KEY, PORTAL , TEMPLE  )
+#Creacion de los agentes
+agent_human = Human(mapaH)
+agent_octopus = Octopus(mapaO)
 
-agent_human = Human(mapa)
+#Cargar imagenes
 human_image = pygame.image.load("./human.png")
-agent_octopus = Octopus(mapa)
 octupus_image = pygame.image.load("./octopus.png")
 temple_image = pygame.image.load("./temple.png")
 portal_image = pygame.image.load("./portal.png")
@@ -33,11 +40,11 @@ temple_destroid_image = pygame.image.load("./temple_destroid.png")
 two_keys_image = pygame.image.load("./two_keys.png")
 
 
-rend = Rend(mapa, agent_human, agent_octopus, TAMANO_CELDA)
+rend = Rend(mapaH,mapaO, TAMANO_CELDA)
 
 ventana = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
-pygame.display.set_caption("Dibujando Tablero")
 
+pygame.display.set_caption("Dibujando Tablero")
 
 nueva_ancho = 25
 nueva_alto = 25
@@ -50,23 +57,27 @@ key_image = pygame.transform.scale(key_image, (nueva_ancho, nueva_alto))
 temple_destroid_image = pygame.transform.scale(temple_destroid_image, (nueva_ancho, nueva_alto))
 two_keys_image = pygame.transform.scale(two_keys_image, (nueva_ancho, nueva_alto))
 
-astarHuman = AStar(mapa, agent_human)
-astarOctopus = AStar(mapa, agent_octopus)
+astarHuman = AStar(mapaH, agent_human)
+astarOctopus = AStar(mapaO, agent_octopus)
 
-portal = mapa.board_portal
-key = mapa.board_key
-temple = mapa.board_temple
-startHuman = mapa.board_init_human
-startOctopus = mapa.board_init_octu
+portalH = mapaH.board_portal
+keyH = mapaH.board_key
+templeH = mapaH.board_temple
+startHuman = mapaH.board_init
+startOctopus = mapaO.board_init
 
-pathHumanKey = astarHuman.astar_search(startHuman, key)
-pathHumanKeyTemple = astarHuman.astar_search(key, temple)
-pathHumanKeyTemplePortal = astarHuman.astar_search(temple, portal)
+portalO = mapaO.board_portal
+keyO = mapaO.board_key
+templeO = mapaO.board_temple
+
+pathHumanKey = astarHuman.astar_search(startHuman, keyH)
+pathHumanKeyTemple = astarHuman.astar_search(keyH, templeH)
+pathHumanKeyTemplePortal = astarHuman.astar_search(templeH, portalH)
 
 
-pathOctopusKey = astarOctopus.astar_search(startOctopus, key)
-pathOctopusKeyTemple = astarOctopus.astar_search(key, temple)
-pathOctopusKeyTemplePortal = astarOctopus.astar_search(temple, portal)
+pathOctopusKey = astarOctopus.astar_search(startOctopus, keyH)
+pathOctopusKeyTemple = astarOctopus.astar_search(keyH, templeH)
+pathOctopusKeyTemplePortal = astarOctopus.astar_search(templeH, portalH)
 
 ejecutar = True
 path_index_HK = 0

@@ -1,11 +1,10 @@
 class Board:
 
-    def __init__(self, file_path , value_init_human, value_init_octu , value_key ,value_portal , value_temple ) -> None:
+    def __init__(self, file_path , value_init, value_key ,value_portal , value_temple ) -> None:
         # Define the path to the text file
         self.board_file_path = file_path
         self.board_data = self.read_board(self.board_file_path)
-        self.board_init_human = value_init_human
-        self.board_init_octu = value_init_octu
+        self.board_init = value_init
         self.board_key = value_key
         self.board_portal = value_portal
         self.board_temple = value_temple

@@ -4,6 +4,7 @@ class Agent:
     def __init__(self,tablero):
         self.tablero = tablero
         self.value = self.tablero.get_cell_value(self.pos_actual)
+        self.pos_actual = list(getattr(tablero , "board_init"))
         self.value[2] = "X"
         tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],self.value)
         self.cost_counter = int()
@@ -207,7 +208,6 @@ class Agent:
 
 class Human(Agent):
     def __init__(self, tablero):
-        self.pos_actual = list(getattr(tablero , "board_init_human"))
         super().__init__(tablero)
         self.mountain = 1000
         self.earth = 1
@@ -219,7 +219,6 @@ class Human(Agent):
 
 class Octopus (Agent):
     def __init__(self, tablero):
-        self.pos_actual = list(getattr(tablero , "board_init_octu"))
         super().__init__(tablero)
         self.mountain= 10
         self.earth= 4

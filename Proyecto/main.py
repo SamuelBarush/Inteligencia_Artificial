@@ -57,8 +57,8 @@ key_image = pygame.transform.scale(key_image, (nueva_ancho, nueva_alto))
 temple_destroid_image = pygame.transform.scale(temple_destroid_image, (nueva_ancho, nueva_alto))
 two_keys_image = pygame.transform.scale(two_keys_image, (nueva_ancho, nueva_alto))
 
-astarHuman = AStar(mapaH, agent_human)
-astarOctopus = AStar(mapaO, agent_octopus)
+astarHuman = AStar(mapaH, agent_human, "Human")
+astarOctopus = AStar(mapaO, agent_octopus, "Octopus")
 
 portalH = mapaH.board_portal
 keyH = mapaH.board_key
@@ -179,7 +179,7 @@ while ejecutar:
     pygame.display.update()
     pygame.time.delay(150)
 
-astarHuman.render_decision_tree()
-astarOctopus.render_decision_tree()
+astarHuman.render_decision_tree("human")
+astarOctopus.render_decision_tree("octopus")
     
 pygame.quit()

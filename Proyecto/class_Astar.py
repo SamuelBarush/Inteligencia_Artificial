@@ -1,12 +1,12 @@
 import graphviz
 
 class AStar:
-    def __init__(self, board, agent):
+    def __init__(self, board, agent,graphname):
         self.board = board
         self.agent = agent
         self.explored_nodes = set()
         self.paths_to_nodes = {}
-        self.graph = graphviz.Digraph('DecisionTree')
+        self.graph = graphviz.Digraph(graphname)
 
 
     def heuristic(self, node, goal):
@@ -98,6 +98,6 @@ class AStar:
     def get_path_to_node(self, node):
         return self.paths_to_nodes.get(tuple(node), [])
 
-    def render_decision_tree(self):
+    def render_decision_tree(self,graphname):
         print("created")
-        return self.graph.render('decision_tree', view=True, format='pdf', engine='dot')
+        return self.graph.render(graphname, view=True, format='pdf', engine='dot')

@@ -3,8 +3,8 @@ from class_Map import Board
 class Agent:
     def __init__(self,tablero):
         self.tablero = tablero
-        self.value = self.tablero.get_cell_value(self.pos_actual)
         self.pos_actual = list(getattr(tablero , "board_init"))
+        self.value = self.tablero.get_cell_value(self.pos_actual)
         self.value[2] = "X"
         tablero.update_cel_values(self.pos_actual[0],self.pos_actual[1],self.value)
         self.cost_counter = int()

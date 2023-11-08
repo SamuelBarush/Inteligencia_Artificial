@@ -57,12 +57,17 @@ key_image = pygame.transform.scale(key_image, (nueva_ancho, nueva_alto))
 temple_destroid_image = pygame.transform.scale(temple_destroid_image, (nueva_ancho, nueva_alto))
 two_keys_image = pygame.transform.scale(two_keys_image, (nueva_ancho, nueva_alto))
 
-astarHuman = AStar(mapaH, agent_human, "Human")
-astarOctopus = AStar(mapaO, agent_octopus, "Octopus")
+astarHumanKey = AStar(mapaH, agent_human, "Human_Key")
+astarHumanKeyTemple = AStar(mapaH, agent_human, "Human_Key_Temple")
+astarHumanKeyTemplePortal = AStar(mapaH, agent_human, "Human_Key_Temple_Portal")
+astarOctopusKeyTemple = AStar(mapaO, agent_octopus, "Octopus_Key_Temple")
+astarOctopusKey = AStar(mapaO, agent_octopus, "Octopus_Key")
+astarOctopusKeyTemplePortal = AStar(mapaO, agent_octopus, "Octopus_Key_Temple_Portal")
 
 portalH = mapaH.board_portal
 keyH = mapaH.board_key
 templeH = mapaH.board_temple
+
 startHuman = mapaH.board_init
 startOctopus = mapaO.board_init
 
@@ -70,14 +75,13 @@ portalO = mapaO.board_portal
 keyO = mapaO.board_key
 templeO = mapaO.board_temple
 
-pathHumanKey = astarHuman.astar_search(startHuman, keyH)
-pathHumanKeyTemple = astarHuman.astar_search(keyH, templeH)
-pathHumanKeyTemplePortal = astarHuman.astar_search(templeH, portalH)
+pathHumanKey = astarHumanKey.astar_search(startHuman, keyH)
+pathHumanKeyTemple = astarHumanKeyTemple.astar_search(keyH, templeH)
+pathHumanKeyTemplePortal = astarHumanKeyTemplePortal.astar_search(templeH, portalH)
 
-
-pathOctopusKey = astarOctopus.astar_search(startOctopus, keyH)
-pathOctopusKeyTemple = astarOctopus.astar_search(keyH, templeH)
-pathOctopusKeyTemplePortal = astarOctopus.astar_search(templeH, portalH)
+pathOctopusKey = astarOctopusKey.astar_search(startOctopus, keyH)
+pathOctopusKeyTemple = astarOctopusKeyTemple.astar_search(keyH, templeH)
+pathOctopusKeyTemplePortal = astarOctopusKeyTemplePortal.astar_search(templeH, portalH)
 
 ejecutar = True
 path_index_HK = 0
@@ -182,7 +186,11 @@ while ejecutar:
     if flag_HKTP == False and flag_OKTP == False:
         ejecutar = False
 
-#astarHuman.render_decision_tree("human")
-#astarOctopus.render_decision_tree("octopus")
+astarHumanKey.render_decision_tree("human_key")
+astarHumanKeyTemple.render_decision_tree("human_key_temple")
+astarHumanKeyTemplePortal.render_decision_tree("human_key_temple_portal")
+astarOctopusKey.render_decision_tree("octopus_key")
+astarOctopusKeyTemple.render_decision_tree("octopus_key_temple")
+astarOctopusKeyTemplePortal.render_decision_tree("octopus_key_temple_portal")
     
 pygame.quit()

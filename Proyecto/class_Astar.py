@@ -8,7 +8,6 @@ class AStar:
         self.paths_to_nodes = {}
         self.graph = graphviz.Digraph(graphname)
 
-
     def heuristic(self, node, goal):
         x1, y1 = node
         x2, y2 = goal

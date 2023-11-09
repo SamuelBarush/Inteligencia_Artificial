@@ -27,7 +27,7 @@ class Rend:
                 if discovered == "D":
                     color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
                 else:
-                    color = (255, 255, 255)  # Set the color to black for undiscovered cells
+                    color = (0, 0, 0)  # Set the color to black for undiscovered cells
 
                 pygame.draw.rect(ventana, color, (x, y, self.TAMANO_CELDA, self.TAMANO_CELDA))
 

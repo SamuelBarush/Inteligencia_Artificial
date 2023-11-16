@@ -1,5 +1,4 @@
 import graphviz
-
 class AStar:
     def __init__(self, board, agent):
         self.board = board
@@ -8,23 +7,14 @@ class AStar:
         self.paths_to_nodes = {}
         self.graph = graphviz.Digraph('DecisionTree')
 
-
     def heuristic(self, node, goal):
         x1, y1 = node
         x2, y2 = goal
         heuristic_cost = abs(x2 - x1) + abs(y2 - y1)
         return heuristic_cost
 
-    def distance(self, node1, node2):
-        x1, y1 = node1
-        x2, y2 = node2
-        cell_type = self.board.get_cell_value(node2)[0]
-        agent_costs = self.agent.get_cost_values()
-        if cell_type in agent_costs:
-            return agent_costs[cell_type] + abs(x2 - x1) + abs(y2 - y1)
-        else:
-            return float('inf')
-    
+    def distance(self, node):
+        return self.board.get_cell_cost(node)
     def astar_search(self, start, goal):
         open_set = [tuple(start)]
         came_from = {}
@@ -35,7 +25,10 @@ class AStar:
         while open_set:
             current = min(open_set, key=lambda node: f_score[node])
 
-            self.graph.node(str(current), label=f'Pos: {current}\n[g: {g_score[current]}, h: {self.heuristic(current, goal)}, f: {g_score[current] + self.heuristic(current, goal)}]')
+            self.graph.node(
+                str(current),
+                label=f'Pos: {current}\n[g: {g_score[current]}, h: {self.heuristic(current, goal)}, f: {g_score[current] + self.heuristic(current, goal)}]'
+            )
 
             if current == tuple(goal):
                 path = [current]
@@ -52,21 +45,19 @@ class AStar:
                 if neighbor in self.explored_nodes:
                     continue
 
-                tentative_g_score = g_score[current] + self.distance(list(current), neighbor)
+                tentative_g_score = g_score[current] + self.distance(neighbor)
 
-                if neighbor not in open_set:
-                    open_set.append(neighbor)
-                elif tentative_g_score >= g_score[neighbor]:
-                    continue
+                if neighbor not in open_set or tentative_g_score < g_score[neighbor]:
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g_score
+                    f_score[neighbor] = g_score[neighbor] + self.heuristic(neighbor, goal)
 
-                came_from[neighbor] = current
-                g_score[neighbor] = tentative_g_score
-                f_score[neighbor] = g_score[neighbor] + self.heuristic(neighbor, goal)
+                    if neighbor not in open_set:
+                        open_set.append(neighbor)
 
-                # Add an edge to the Graphviz graph to represent the exploration path
-                self.graph.edge(str(current), str(neighbor))
-        
-        
+                    # Add an edge to the Graphviz graph to represent the exploration path
+                    self.graph.edge(str(current), str(neighbor))
+
         return None
 
     def get_neighbors(self, node):

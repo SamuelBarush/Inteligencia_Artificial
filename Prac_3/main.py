@@ -15,8 +15,8 @@ GLOBAL SETTINGS
 AGENT_TYPE = 0
 
 # Metrics
-START = (1,1)
-GOAL = (14,14)
+START = (0,5)
+GOAL = (7,5)
 
 # Window size and cell size
 ANCHO_VENTANA = 800
@@ -77,6 +77,7 @@ path = astar.astar_search(start, goal)
 ejecutando = True
 path_index = 0  # Initialize the index for the path
 
+astar.render_decision_tree()
 
 while ejecutando:
     for evento in pygame.event.get():
@@ -92,6 +93,8 @@ while ejecutando:
         if path_index < len(path):
             next_position = path[path_index]
             agente.set_pos_actual(next_position)
+            print(tablero.get_cell_value(next_position))
+            print(tablero.get_cell_cost(next_position))
             path_index += 1
         else:
             

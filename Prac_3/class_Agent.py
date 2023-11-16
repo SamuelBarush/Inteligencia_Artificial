@@ -170,26 +170,25 @@ class Agent:
                 if aux is not None:
                     if aux[0] == 0:
                         aux[1] = self.mountain
-                    if aux[0] == 1:
+                    elif aux[0] == 1:
                         aux[1] = self.earth
-                    if aux[0] == 2:
+                    elif aux[0] == 2:
                         aux[1] = self.water
-                    if aux[1] == 3:
+                    elif aux[0] == 3:
                         aux[1] = self.sand
-                    if aux[0] == 4:
+                    elif aux[0] == 4:
                         aux[1] = self.forest
                     """
-                    if aux[1] == 5:
+                    if aux[0] == 5:
                         aux[1] = self.swamp
-                    if aux[1] == 6:
+                    elif aux[0] == 6:
                         aux[1] = self.snow
                     """
                     #print(aux)
                     self.tablero.update_cel_values(i, j, aux)
-
                 else:
-                    # Handle the case where get_cell_value returns None for (i, j)
                     print(f"Cell ({i}, {j}) is None, skipping...")
+
     
     def show_current_cost(self):
         print("the current cost is: {}".format(self.cost_counter))

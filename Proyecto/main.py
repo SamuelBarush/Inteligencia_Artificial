@@ -3,6 +3,7 @@ from class_Game import Rend
 from class_Agent import *
 from class_Astar import AStar 
 import pygame
+import time 
 
 #Parametros de la ventana
 
@@ -189,8 +190,9 @@ while ejecutar:
 astarHumanKey.render_decision_tree("human_key")
 astarHumanKeyTemple.render_decision_tree("human_key_temple")
 astarHumanKeyTemplePortal.render_decision_tree("human_key_temple_portal")
-astarOctopusKey.render_decision_tree("octopus_key")
-astarOctopusKeyTemple.render_decision_tree("octopus_key_temple")
-astarOctopusKeyTemplePortal.render_decision_tree("octopus_key_temple_portal")
+#astarOctopusKey.render_decision_tree("octopus_key")
+#astarOctopusKeyTemple.render_decision_tree("octopus_key_temple")
+#astarOctopusKeyTemplePortal.render_decision_tree("octopus_key_temple_portal")
     
+time.sleep(1000)
 pygame.quit()

@@ -63,8 +63,7 @@ class Rend:
             return [0, 0, 0, '']
 
     def combine_cells(self, cell1, cell2):
-        # Combine the cells from both maps based on your logic
-        # For example, you can choose to use data from one map if the other is undiscovered
+     
         if cell1[2] == 'D':
             return cell1
         else:

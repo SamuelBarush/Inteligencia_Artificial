@@ -26,7 +26,7 @@ class Rend:
                 discovered = celda[2]  # Assuming that the discovery status is the third element of the cell's data
 
                 # Check if the cell is the initial or end point
-                is_initial_point = (fila, columna) == self.tablero.board_init
+                is_initial_point = (columna,fila) == self.tablero.board_init
                 is_end_point = (columna, fila) == self.tablero.board_end
 
                 if is_initial_point:

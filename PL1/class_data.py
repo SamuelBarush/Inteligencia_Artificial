@@ -16,7 +16,6 @@ class Data:
                     for cell in line.strip().split(self.delimiter):
                         data_type = self.get_type(cell)
                         attribute = self.attributes[i]
-                        print(attribute)
                         row.append((cell, data_type, attribute))
                         i += 1  # Increment i to move to the next attribute
                     data.append(row)

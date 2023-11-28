@@ -7,10 +7,10 @@ class Rend:
         self.TAMANO_CELDA = TAMANO_CELDA
         self.colores = {
             0: (128, 128, 128),  # Mountain (Grey)
-            1: (139, 69, 19),    # Earth (Brown)
+            4: (139, 69, 19),    # Earth (Brown)
             2: (0, 0, 255),      # Water (Blue)
             3: (255, 223, 186),  # Sand (Light Brown)
-            4: (0, 128, 0),      # Forest (Green)
+            1: (0, 128, 0),      # Forest (Green)
             5: (0, 128, 128),    # Swamp (Teal)
             6: (255, 255, 255),  # Snow (White)
         }

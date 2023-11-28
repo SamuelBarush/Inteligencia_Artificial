@@ -1,11 +1,12 @@
 import graphviz
+
 class AStar:
     def __init__(self, board, agent):
         self.board = board
         self.agent = agent
         self.explored_nodes = set()
         self.paths_to_nodes = {}
-        self.graph = graphviz.Digraph('DecisionTree')
+        self.graph = graphviz.Digraph('Decision_Tree')
 
     def heuristic(self, node, goal):
         x1, y1 = node
@@ -14,7 +15,9 @@ class AStar:
         return heuristic_cost
 
     def distance(self, node):
-        return self.board.get_cell_cost(node)
+        value =self.board.get_cell_cost(node)  
+        return value
+    
     def astar_search(self, start, goal):
         open_set = [tuple(start)]
         came_from = {}
@@ -44,9 +47,7 @@ class AStar:
             for neighbor in self.get_neighbors(list(current)):
                 if neighbor in self.explored_nodes:
                     continue
-
                 tentative_g_score = g_score[current] + self.distance(neighbor)
-
                 if neighbor not in open_set or tentative_g_score < g_score[neighbor]:
                     came_from[neighbor] = current
                     g_score[neighbor] = tentative_g_score
@@ -59,7 +60,7 @@ class AStar:
                     self.graph.edge(str(current), str(neighbor))
 
         return None
-
+    
     def get_neighbors(self, node):
         neighbors = []
         x, y = node
@@ -73,14 +74,18 @@ class AStar:
 
             if self.is_valid_neighbor(new_node):
                 neighbors.append(new_node)
+                print(neighbors)
 
         return neighbors
 
     def is_valid_neighbor(self, neighbor):
         x, y = neighbor
-        if 0 <= y < len(self.board.board_data) and 0 <= x < len(self.board.board_data[y]):
-            cell_type = self.board.get_cell_value(neighbor)[0]
-            return cell_type != 0
+        if 0 <= x < len(self.board.board_data) and 0 <= y < len(self.board.board_data[0]):
+            cell_type = self.board.get_cell_value(neighbor)[1]
+            print(str(cell_type)+str(x)+str(y)) 
+            if cell_type == 0:
+                return False
+            return True
         return False
 
     def get_explored_nodes(self):
@@ -91,4 +96,4 @@ class AStar:
 
     def render_decision_tree(self):
         print("created")
-        return self.graph.render('decision_tree', view=True, format='pdf', engine='dot')
+        return self.graph.render('Decision_tree', view=True, format='pdf', engine='dot')

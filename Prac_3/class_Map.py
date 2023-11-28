@@ -68,5 +68,5 @@ class Board:
         x, y = coordinates
         if 0 <= x < len(self.board_data) and 0 <= y < len(self.board_data[0]):
             cell = self.board_data[y][x]
-            print(cell[1])
+            #print(cell[1])
             return cell[1]  # Devuelve el valor del costo en la celda

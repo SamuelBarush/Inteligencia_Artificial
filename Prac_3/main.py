@@ -24,7 +24,7 @@ ALTO_VENTANA = 600
 TAMANO_CELDA = 30
 
 # Movement
-SPEED = 5
+SPEED = 500
 
 # Board file
 archivo_tablero = "./board1.txt"
@@ -75,9 +75,8 @@ path = astar.astar_search(start, goal)
 
 # Bucle principal
 ejecutando = True
+flag = True
 path_index = 0  # Initialize the index for the path
-
-astar.render_decision_tree()
 
 while ejecutando:
     for evento in pygame.event.get():
@@ -93,24 +92,23 @@ while ejecutando:
         if path_index < len(path):
             next_position = path[path_index]
             agente.set_pos_actual(next_position)
-            print(tablero.get_cell_value(next_position))
-            print(tablero.get_cell_cost(next_position))
             path_index += 1
-        else:
-            
+        else:           
             print("Reached the goal!")
-
+            flag = False
+            
     rend.dibujar_mapa(ventana)
 
     # Draw the agent at its current position
     ventana.blit(player_imagen, (agente.pos_actual[0] * TAMANO_CELDA, agente.pos_actual[1] * TAMANO_CELDA))
 
-
     pygame.display.update()
 
     # Add a delay to slow down the movement (in milliseconds)
     pygame.time.delay(SPEED)  # Adjust the delay as needed
+    
+    if flag == False:
+        ejecutando = False
 
-astar.render_decision_tree()
-
+#astar.render_decision_tree()
 pygame.quit()

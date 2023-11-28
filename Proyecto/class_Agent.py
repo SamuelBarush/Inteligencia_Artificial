@@ -223,7 +223,7 @@ class Human(Agent):
 class Octopus (Agent):
     def __init__(self, tablero):
         super().__init__(tablero)
-        self.mountain= 10
+        self.mountain= 0
         self.earth= 4
         self.water=1
         self.sand= 0

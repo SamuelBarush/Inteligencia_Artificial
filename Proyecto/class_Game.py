@@ -22,12 +22,12 @@ class Rend:
 
                 # Determine the color based on the cell's value
                 value = celda[0]  # Assuming that the value is the first element of the cell's data
-                discovered = celda[2]  # Assuming that the discovery status is the third element of the cell's data
+                #discovered = celda[2]  # Assuming that the discovery status is the third element of the cell's data
 
-                if discovered == "D":
-                    color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
-                else:
-                    color = (0, 0, 0)  # Set the color to black for undiscovered cells
+                #if discovered == "D":
+                color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
+                #else:
+                #    color = (0, 0, 0)  # Set the color to black for undiscovered cells
 
                 pygame.draw.rect(ventana, color, (x, y, self.TAMANO_CELDA, self.TAMANO_CELDA))
 
@@ -62,8 +62,7 @@ class Rend:
             # Return a default cell data for out-of-bounds positions
             return [0, 0, 0, '']
 
-    def combine_cells(self, cell1, cell2):
-     
+    def combine_cells(self, cell1, cell2):   
         if cell1[2] == 'D':
             return cell1
         else:

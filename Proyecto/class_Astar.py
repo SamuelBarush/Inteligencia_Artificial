@@ -39,6 +39,7 @@ class AStar:
                     current = came_from[current]
                     path.insert(0, current)
                 self.paths_to_nodes[tuple(goal)] = path  # Store the path to the goal node
+                #print("Path: ",path)
                 return path
 
             open_set.remove(current)
@@ -74,7 +75,7 @@ class AStar:
 
             if self.is_valid_neighbor(new_node):
                 neighbors.append(new_node)
-                print(neighbors)
+                #print(neighbors)
 
         return neighbors
 
@@ -82,7 +83,7 @@ class AStar:
         x, y = neighbor
         if 0 <= x < len(self.board.board_data) and 0 <= y < len(self.board.board_data[0]):
             cell_type = self.board.get_cell_value(neighbor)[1]
-            print(str(cell_type)+str(x)+str(y)) 
+            #print(str(cell_type)+str(x)+str(y)) 
             if cell_type == 0:
                 return False
             return True
@@ -95,5 +96,5 @@ class AStar:
         return self.paths_to_nodes.get(tuple(node), [])
 
     def render_decision_tree(self,graphname):
-        print("created")
+        #print("created")
         return self.graph.render(graphname, view=True, format='pdf', engine='dot')

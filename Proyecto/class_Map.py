@@ -57,7 +57,7 @@ class Board:
         if 0 <= x < len(self.board_data) and 0 <= y < len(self.board_data[0]):
             return self.board_data[y][x]
         else:
-            print("Invalid coordinates",coordinates)
+            #print("Invalid coordinates",coordinates)
             return None  # You can choose to return a default value or raise an exception instead of None
 
     def get_cell_cost(self, coordinates):

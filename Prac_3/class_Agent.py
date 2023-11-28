@@ -210,10 +210,10 @@ class Monkey(Agent):
 
         super().__init__(tablero)
         self.mountain = 0
-        self.earth = 2
-        self.water = 4
+        self.earth = 1
+        self.water = 5
         self.sand = 3
-        self.forest = 1
+        self.forest = 2
         #self.swamp = 5
         #self.snow = 5
         self.set_cost_value()

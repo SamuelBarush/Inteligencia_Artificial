@@ -7,10 +7,10 @@ class Rend:
         self.TAMANO_CELDA = TAMANO_CELDA
         self.colores = {
             0: (128, 128, 128),  # Mountain (Grey)
-            4: (139, 69, 19),    # Earth (Brown)
+            1: (139, 69, 19),    # Earth (Brown)
             2: (0, 0, 255),      # Water (Blue)
             3: (255, 223, 186),  # Sand (Light Brown)
-            1: (0, 128, 0),      # Forest (Green)
+            4: (0, 128, 0),      # Forest (Green)
             5: (0, 128, 128),    # Swamp (Teal)
             6: (255, 255, 255),  # Snow (White)
         }
@@ -33,7 +33,7 @@ class Rend:
                     color = (255, 0, 0)  # Set the color to red for the initial point
                 elif is_end_point:
                     color = (0, 255, 0)  # Set the color to green for the end point
-                elif discovered == "D":
+                elif discovered == "D":    
                     color = self.colores.get(value, (255, 255, 255))  # Use the color associated with the value
                 else:
                     color = (0, 0, 0)  # Set the color to black for undiscovered cells

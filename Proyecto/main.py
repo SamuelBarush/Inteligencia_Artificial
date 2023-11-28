@@ -13,7 +13,7 @@ TAMANO_CELDA = 30
 
 #Coordenadas de los elementos del mapa
 TEMPLE = (10,2)
-KEY = (13,14)
+KEY = (7,13)
 PORTAL = (10,9)
 HUMAN = (7,2)
 OCTOPUS = (13,11)
@@ -31,6 +31,23 @@ mapaO = Board(archivo_tablero, OCTOPUS ,KEY, PORTAL , TEMPLE  )
 agent_human = Human(mapaH)
 agent_octopus = Octopus(mapaO)
 
+
+flagT = mapaH.get_cell_value(TEMPLE)
+flagP = mapaH.get_cell_value(PORTAL)
+flagK = mapaH.get_cell_value(KEY)
+
+if (flagT == None):
+    print("Temple is invalid coordinates")
+    exit()
+
+if (flagP == None):
+    print("Portal is invalid coordinates")
+    exit()
+
+if (flagK == None):
+    print("Key out is invalid coordinates")
+    exit()
+
 #Cargar imagenes
 human_image = pygame.image.load("./human.png")
 octupus_image = pygame.image.load("./octopus.png")
@@ -39,7 +56,6 @@ portal_image = pygame.image.load("./portal.png")
 key_image = pygame.image.load("./key.png")
 temple_destroid_image = pygame.image.load("./temple_destroid.png")
 two_keys_image = pygame.image.load("./two_keys.png")
-
 
 rend = Rend(mapaH,mapaO, TAMANO_CELDA)
 
@@ -166,8 +182,6 @@ while ejecutar:
         ventana.blit(two_keys_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
     elif flag_HK or flag_OK:
         ventana.blit(key_image,(KEY[0] * TAMANO_CELDA, KEY[1] * TAMANO_CELDA))
-  
-
         
     if flag_HKT and flag_OKT:
         ventana.blit(temple_image,(TEMPLE[0] * TAMANO_CELDA, TEMPLE[1] * TAMANO_CELDA))
@@ -187,12 +201,10 @@ while ejecutar:
     if flag_HKTP == False and flag_OKTP == False:
         ejecutar = False
 
-astarHumanKey.render_decision_tree("human_key")
-astarHumanKeyTemple.render_decision_tree("human_key_temple")
-astarHumanKeyTemplePortal.render_decision_tree("human_key_temple_portal")
+#astarHumanKey.render_decision_tree("human_key")
+#astarHumanKeyTemple.render_decision_tree("human_key_temple")
+#astarHumanKeyTemplePortal.render_decision_tree("human_key_temple_portal")
 #astarOctopusKey.render_decision_tree("octopus_key")
 #astarOctopusKeyTemple.render_decision_tree("octopus_key_temple")
 #astarOctopusKeyTemplePortal.render_decision_tree("octopus_key_temple_portal")
-    
-time.sleep(1000)
 pygame.quit()

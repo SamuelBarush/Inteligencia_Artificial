@@ -1,5 +1,6 @@
 from class_data import Data
 from class_file import File
+from class_knn import KNN
 
 ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'
@@ -28,3 +29,6 @@ print("Matriz 3")
 #archivo_1.write_data(Matriz)
 #archivo_2.write_data(Matriz2)
 #archivo3.write_data(Matriz3)
+
+clasificar = KNN(3, Matriz, Matriz2, 'euclidean')
+print(clasificar.distance)

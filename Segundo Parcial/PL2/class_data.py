@@ -60,6 +60,7 @@ class Data:
         return transposed_data
     
     def get_rows(self, n):
+        row = list()
         for i in range(min(n, len(self.data))):
             row = self.data[i]
         return row

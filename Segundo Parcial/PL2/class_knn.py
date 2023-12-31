@@ -19,6 +19,7 @@ class KNN:
             for i, data_point in enumerate(self.data):
                 dist = self.calculate_distance(x_values, data_point)
                 distances.append((dist, self.labels[i]))  # Tupla de (distancia, etiqueta)
+            print(distances)    
             distances.sort(key=lambda x: x[0])  # Ordenar distancias de menor a mayor
             k_nearest = distances[:self.k]  # Obtener los k vecinos más cercanos
             k_labels = [label for (_, label) in k_nearest]

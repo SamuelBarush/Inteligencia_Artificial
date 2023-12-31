@@ -1,6 +1,7 @@
 from class_data import Data
 from class_file import File
 from class_knn import KNN
+from class_min import MIN
 
 ARCHIVO = 'Segundo Parcial\PL2\wine.data'
 ARCHIVO1 = 'new.txt'
@@ -49,3 +50,5 @@ knn.get_labels()
 predictions = knn.predict(test_data)
 print(f"Predicciones:{predictions}")
 
+
+min = MIN(distancie="euclidean")

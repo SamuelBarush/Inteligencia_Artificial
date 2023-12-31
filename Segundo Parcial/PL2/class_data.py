@@ -72,8 +72,8 @@ class Data:
             asdf.append(row)
         return asdf
     
-    def show_database(self):
-        for row in self.data:
+    def show_database(self, data):
+        for row in data:
             for cell in row:
                 print(cell, end=' ')
             print()               

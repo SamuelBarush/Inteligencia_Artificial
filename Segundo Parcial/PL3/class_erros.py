@@ -1,6 +1,7 @@
 class ERROR:
     def __init__(self,data) ->None:
         self.data = data
+        self.clase1,self.clase2,self.clase3 = self.contar()
 
     def contar(self):
         count = 0
@@ -36,7 +37,6 @@ class ERROR:
             if (self.data[i][0][0] == '1' ):
                 if self.data[i][1][0] == '0':
                     datos_clase1 [1] += 1
-                    
                 elif self.data[i][2][0] == '0':
                     datos_clase1 [2] += 1
                 elif self.data[i][3][0] == '0':
@@ -116,6 +116,46 @@ class ERROR:
                 elif self.data[i][13][0] == '0':
                     datos_clase3 [13] += 1
         
+        for i in range (1,len(datos_clase1)):
+            porcentaje1 = (datos_clase1[i]/self.clase1)*100
+            print(f"El porcentaje de datos vacios de la clase 1 en el atributo {i} es: {porcentaje1}")
+        for i in range (1,len(datos_clase2)):
+            porcentaje2 = (datos_clase2[i]/self.clase2)*100
+            print(f"El porcentaje de datos vacios de la clase 2 en el atributo {i} es: {porcentaje2}")
+        for i in range (1,len(datos_clase3)):
+            porcentaje3 = (datos_clase3[i]/self.clase3)*100
+            print(f"El porcentaje de datos vacios de la clase 3 en el atributo {i} es: {porcentaje3}")
+        return count, datos_clase1, datos_clase2, datos_clase3
+    
+    #def normalizar(self):
+
+
+
+    # ------------------------ 2 ------------------------
+    
+    def vacios_2(self):
+        count = 0
+        datos_clase1 = [0] * len(self.data[0])
+        datos_clase2 = [0] * len(self.data[0])
+        datos_clase3 = [0] * len(self.data[0])
+
+        for i in range(len(self.data)):
+            for j in range(1, len(self.data[i])):  # Comenzamos desde 1 para omitir la clase
+                if self.data[i][j][0] == '0':
+                    count += 1
+                    if self.data[i][0][0] == '1':
+                        datos_clase1[j] += 1
+                    elif self.data[i][0][0] == '2':
+                        datos_clase2[j] += 1
+                    elif self.data[i][0][0] == '3':
+                        datos_clase3[j] += 1
+
+        for i in range(1, len(self.data[0])):
+            print(f"Atributo {i}:")
+            print(f"  De  faltan {datos_clase1[i]} ({(datos_clase1[i] / count) * 100}%)")
+            print(f"  De  faltan {datos_clase2[i]} ({(datos_clase2[i] / count) * 100}%)")
+            print(f"  De  faltan {datos_clase3[i]} ({(datos_clase3[i] / count) * 100}%)")
+
         return count, datos_clase1, datos_clase2, datos_clase3
     
     

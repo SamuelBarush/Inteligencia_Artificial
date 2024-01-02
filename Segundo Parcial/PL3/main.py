@@ -28,30 +28,33 @@ base_datos = Data(ARCHIVO, DELIMITADOR, ATRIBUTOS)
 
 Matriz = base_datos.get_attribute(['Class','Alcohol','Malic acid','Magnesium'])
 Matriz0 = base_datos.get_rows_range(Matriz,50,60)
-print_matrix(Matriz0)
+#print_matrix(Matriz0)
 
 
 Matriz1 = base_datos.get_attribute(['Class','Alcohol','Malic acid','Magnesium'])
 Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
-print_matrix(Matriz01)
+#print_matrix(Matriz01)
 
 
 #Detectar el porcentaje de muestras
 
 error = ERROR(base_datos.data)
-class1,class2,class3 = error.contar()
-print(f"El numero de muestras de la clase 1 es: {class1}")
-print(f"El numero de muestras de la clase 2 es: {class2}")  
-print(f"El numero de muestras de la clase 3 es: {class3}")
 
-porcentaje1,porcentaje2,porcentaje3 = error.porcentaje(class1,class2,class3)
-print(f"El porcentaje de muestras de la clase 1 es: {porcentaje1}") 
-print(f"El porcentaje de muestras de la clase 2 es: {porcentaje2}") 
-print(f"El porcentaje de muestras de la clase 3 es: {porcentaje3}") 
+print(error.normalizar())
 
-vacios = error.vacios()
+#class1,class2,class3 = error.contar()
+#print(f"El numero de muestras de la clase 1 es: {class1}")
+#print(f"El numero de muestras de la clase 2 es: {class2}")  
+#print(f"El numero de muestras de la clase 3 es: {class3}")
+
+#porcentaje1,porcentaje2,porcentaje3 = error.porcentaje(class1,class2,class3)
+#print(f"El porcentaje de muestras de la clase 1 es: {porcentaje1}") 
+#print(f"El porcentaje de muestras de la clase 2 es: {porcentaje2}") 
+#print(f"El porcentaje de muestras de la clase 3 es: {porcentaje3}") 
+
+#vacios = error.vacios()
 #print(f"El numero de muestras vacias es: {vacios}")
 
-print(f"El numero de muestras vacias de la clase 1 es: {vacios[1]}")    
-print(f"El numero de muestras vacias de la clase 2 es: {vacios[2]}")
-print(f"El numero de muestras vacias de la clase 3 es: {vacios[3]}")
+#print(f"El numero de muestras vacias de la clase 1 es: {vacios[1]}")    
+#print(f"El numero de muestras vacias de la clase 2 es: {vacios[2]}")
+#print(f"El numero de muestras vacias de la clase 3 es: {vacios[3]}")

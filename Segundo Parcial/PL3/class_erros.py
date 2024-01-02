@@ -127,9 +127,35 @@ class ERROR:
             print(f"El porcentaje de datos vacios de la clase 3 en el atributo {i} es: {porcentaje3}")
         return count, datos_clase1, datos_clase2, datos_clase3
     
-    #def normalizar(self):
-
-
+    def min(self):
+        minimo = []
+        for i in range (1,len(self.data[0])):
+            #if (self.data[0][i][0] != '0'):
+            minimo.append(self.data[0][i])
+            #else:
+            #    minimo.append(self.data[1][i])
+            for j in range (len(self.data)):
+                if (self.data[j][i] < minimo[i-1]):
+                    if (self.data[j][i][0] != '0'):
+                        minimo[i-1] = self.data[j][i]
+        return minimo
+    
+    def max(self):
+        maximo = []
+        for i in range (1,len(self.data[0])):
+            maximo.append(self.data[0][i])
+            for j in range (len(self.data)):
+                if (self.data[j][i] > maximo[i-1]):
+                    maximo[i-1] = self.data[j][i]
+        return maximo
+    
+    def normalizar(self):
+        maximo = self.max()
+        minimo = self.min()
+        for i in range (len(self.data)):
+            for j in range (1,len(self.data[i])):
+                self.data[i][j] = (self.data[i][j] - minimo[j-1])/(maximo[j-1] - minimo[j-1])
+        return self.data
 
     # ------------------------ 2 ------------------------
     

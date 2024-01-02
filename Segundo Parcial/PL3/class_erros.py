@@ -152,10 +152,19 @@ class ERROR:
     def normalizar(self):
         maximo = self.max()
         minimo = self.min()
+        normal = []
         for i in range (len(self.data)):
+            fila = []
+            fila.append(self.data[i][0])
             for j in range (1,len(self.data[i])):
-                self.data[i][j] = (self.data[i][j] - minimo[j-1])/(maximo[j-1] - minimo[j-1])
-        return self.data
+                aux = [0,0,0]
+                nuevo = (float(self.data[i][j][0]) - float(minimo[j-1][0]))/(float(maximo[j-1][0]) - float(minimo[j-1][0]))
+                aux[0] = nuevo
+                aux[1] = self.data[i][j][1]
+                aux[2] = self.data[i][j][2]
+                fila.append(tuple(aux))
+            normal.append(fila)
+        return normal
 
     # ------------------------ 2 ------------------------
     

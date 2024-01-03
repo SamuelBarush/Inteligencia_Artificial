@@ -3,8 +3,9 @@ from class_file import File
 from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
+import numpy as np
 
-ARCHIVO = './wine.data'
+ARCHIVO = 'Segundo Parcial\PL3\wine.data'
 ARCHIVO1 = 'new.txt'
 ARCHIVO2 = 'new2.txt'
 ARCHIVO3 = 'new3.txt'
@@ -45,9 +46,9 @@ error = ERROR(Matriz01)
 #print(error.desviacion_estandar(1))
 #print(error.media(1))
 
-print_matrix(error.data)
-error.eliminar_columna(1)
-print_matrix(error.data)
+#print_matrix(error.data)
+#error.eliminar_columna(1)
+#print_matrix(error.data)
 
 
 #class1,class2,class3 = error.contar()
@@ -66,3 +67,17 @@ print_matrix(error.data)
 #print(f"El numero de muestras vacias de la clase 1 es: {vacios[1]}")    
 #print(f"El numero de muestras vacias de la clase 2 es: {vacios[2]}")
 #print(f"El numero de muestras vacias de la clase 3 es: {vacios[3]}")
+
+
+
+                
+#data = error.data
+data = error.data_to_list()
+print(data)
+
+for num in range(len(data)):
+    print(data[num])
+    mean = np.mean(data[num])
+    std_dev = np.std(data[num])
+    outliers = error.detect_outliers_Zscore(data[num], mean, std_dev)
+    print("Valores atípicos:", outliers)

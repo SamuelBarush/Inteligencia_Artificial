@@ -217,8 +217,31 @@ class ERROR:
         for i in range (len(self.data)):
             self.data[i].pop(columna)
         return self.data
+
+
     # ------------------------ 2 ------------------------
     
+
+
+
+    def detect_outliers_Zscore(self,data, mean, std_dev, threshold=3):
+        z_scores = [(x - mean) / std_dev for x in data]
+        outliers = [data[i] for i, z in enumerate(z_scores) if abs(z) > threshold]
+        
+        return outliers
+
+ 
+
+    def data_to_list(self):
+        data = []
+        for i in range(len(self.data)):
+            row = []
+            for j in range(len(self.data[i])):
+                row.append(float(self.data[i][j][0]))
+            data.append(row)
+        return data
+
+
     def vacios_2(self):
         count = 0
         datos_clase1 = [0] * len(self.data[0])

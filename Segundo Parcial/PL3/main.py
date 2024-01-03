@@ -40,7 +40,9 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 
 error = ERROR(base_datos.data)
 
-print(error.normalizar())
+print_matrix(error.normalizar())
+
+print(error.desviacion_estandar())
 
 #class1,class2,class3 = error.contar()
 #print(f"El numero de muestras de la clase 1 es: {class1}")

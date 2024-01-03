@@ -1,3 +1,7 @@
+import statistics
+import numpy as np
+from math import sqrt
+
 class ERROR:
     def __init__(self,data) ->None:
         self.data = data
@@ -150,21 +154,47 @@ class ERROR:
         return maximo
     
     def normalizar(self):
-        maximo = self.max()
-        minimo = self.min()
         normal = []
-        for i in range (len(self.data)):
-            fila = []
-            fila.append(self.data[i][0])
-            for j in range (1,len(self.data[i])):
-                aux = [0,0,0]
-                nuevo = (float(self.data[i][j][0]) - float(minimo[j-1][0]))/(float(maximo[j-1][0]) - float(minimo[j-1][0]))
-                aux[0] = nuevo
-                aux[1] = self.data[i][j][1]
-                aux[2] = self.data[i][j][2]
-                fila.append(tuple(aux))
-            normal.append(fila)
+        for i in range(len(self.data)):
+            vector = []
+            sum_of_components = 0
+            vector.append(self.data[i][0])
+            for j in range(1 , len(self.data[i])):
+                component = pow(float(self.data[i][j][0]), 2)  # You missed the exponent value here, so I added 2
+                sum_of_components += component
+            norm = sqrt(sum_of_components)
+
+            for k in range(1 , len(self.data[i])):
+                sub_vector = [0, 0, 0]
+                new_component = float(self.data[i][k][0]) / norm
+                sub_vector[0] = new_component
+                sub_vector[1] = self.data[i][k][1]
+                sub_vector[2] = self.data[i][k][2]
+                vector.append(tuple(sub_vector))
+
+            normal.append(vector)
+
         return normal
+    
+
+    def desviacion_estandar(self):
+        desviacion = []
+        for i in range (1,len(self.data[0])):
+            aux = []
+            for j in range (len(self.data)):
+                aux.append(float(self.data[j][i][0]))
+            desviacion.append(statistics.stdev(aux))
+        return desviacion
+    
+    def valores_atipicos(self):
+        datos_atipicos = []
+        for i in range (1,len(self.data[0])):
+            aux = []
+            #Calculo del Z-Score
+            mean_value = np.
+            
+
+
 
     # ------------------------ 2 ------------------------
     

@@ -128,3 +128,36 @@ class ERROR:
         for i in range (len(self.data)):
             self.data[i].pop(columna)
         return self.data
+    
+    def detect_outliers_Zscore(self,data):
+       # Transponer la lista para tener columnas en lugar de filas
+        data_transposed = np.array(data).T.tolist()
+
+        # Calcular la media y la desviación estándar por columna
+        for col_num, column in enumerate(data_transposed):
+            mean = np.mean(column)
+            std_dev = np.std(column)
+            outliers = []
+            
+            # Detectar valores atípicos utilizando Z-score
+            for i, value in enumerate(column):
+                z_score = (value - mean) / std_dev
+                
+                print(f"el valor atipico es = {value} con valor z = {abs(z_score)}")
+                if abs(z_score) > 2.75:  # Umbral de 3 para detectar valores atípicos
+                    outliers.append((i, value))
+                    #print(f"encontradoooooooooooooooooooo {}")
+            
+            print(f"Atributo {col_num + 1}: Media = {mean}, Desviación estándar = {std_dev}")
+            print(f"Valores atípicos: {outliers}\n")
+
+ 
+
+    def data_to_list(self):
+        data = []
+        for i in range(len(self.data)):
+            row = []
+            for j in range(len(self.data[i])):
+                row.append(float(self.data[i][j][0]))
+            data.append(row)
+        return data

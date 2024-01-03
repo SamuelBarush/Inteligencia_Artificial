@@ -49,3 +49,6 @@ error = ERROR(base_datos.data,3)
 #print_matrix(error.data)
 
 error.vacios(3)
+
+data = error.data_to_list()
+data2 = error.detect_outliers_Zscore(data)

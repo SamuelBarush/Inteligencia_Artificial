@@ -177,25 +177,46 @@ class ERROR:
         return normal
     
 
-    def desviacion_estandar(self):
+    def desviacion_estandar(self,clase):
         desviacion = []
         for i in range (1,len(self.data[0])):
             aux = []
             for j in range (len(self.data)):
-                aux.append(float(self.data[j][i][0]))
+                if (int(self.data[j][0][0]) == clase):
+                    aux.append(float(self.data[j][i][0]))
             desviacion.append(statistics.stdev(aux))
         return desviacion
     
-    def valores_atipicos(self):
-        datos_atipicos = []
+    def media(self,clase):
+        media = []
         for i in range (1,len(self.data[0])):
             aux = []
-            #Calculo del Z-Score
-            mean_value = np.
+            for j in range (len(self.data)):
+                if (int(self.data[j][0][0]) == clase):
+                    aux.append(float(self.data[j][i][0]))
+            media.append(statistics.mean(aux))
+        return media
+    
+    def atipicos(self):
+        pass
             
+    def eliminar_fila(self,fila):
+        if (fila > len(self.data)):
+            print("No existe esa fila")
+            return self.data
+        self.data.pop(fila)
+        return self.data
 
-
-
+    def eliminar_columna(self,columna):
+        if (columna == 0):
+            print("No se puede eliminar la columna CLASE")
+            return self.data
+        if (columna > len(self.data[0])):
+            print("No existe esa columna")
+            return self.data
+        for i in range (len(self.data)):
+            self.data[i].pop(columna)
+        return self.data
     # ------------------------ 2 ------------------------
     
     def vacios_2(self):

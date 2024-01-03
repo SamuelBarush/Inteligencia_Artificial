@@ -38,11 +38,17 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 
 #Detectar el porcentaje de muestras
 
-error = ERROR(base_datos.data)
+error = ERROR(Matriz01)
 
-print_matrix(error.normalizar())
+#print_matrix(error.normalizar())
 
-print(error.desviacion_estandar())
+#print(error.desviacion_estandar(1))
+#print(error.media(1))
+
+print_matrix(error.data)
+error.eliminar_columna(1)
+print_matrix(error.data)
+
 
 #class1,class2,class3 = error.contar()
 #print(f"El numero de muestras de la clase 1 es: {class1}")

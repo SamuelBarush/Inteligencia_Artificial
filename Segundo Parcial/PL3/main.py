@@ -75,9 +75,6 @@ error = ERROR(Matriz01)
 data = error.data_to_list()
 print(data)
 
-for num in range(len(data)):
-    print(data[num])
-    mean = np.mean(data[num])
-    std_dev = np.std(data[num])
-    outliers = error.detect_outliers_Zscore(data[num], mean, std_dev)
-    print("Valores atípicos:", outliers)
+
+outliers = error.detect_outliers_Zscore(data)
+

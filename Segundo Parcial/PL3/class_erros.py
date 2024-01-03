@@ -224,11 +224,27 @@ class ERROR:
 
 
 
-    def detect_outliers_Zscore(self,data, mean, std_dev, threshold=3):
-        z_scores = [(x - mean) / std_dev for x in data]
-        outliers = [data[i] for i, z in enumerate(z_scores) if abs(z) > threshold]
-        
-        return outliers
+    def detect_outliers_Zscore(self,data):
+       # Transponer la lista para tener columnas en lugar de filas
+        data_transposed = np.array(data).T.tolist()
+
+        # Calcular la media y la desviación estándar por columna
+        for col_num, column in enumerate(data_transposed):
+            mean = np.mean(column)
+            std_dev = np.std(column)
+            outliers = []
+            
+            # Detectar valores atípicos utilizando Z-score
+            for i, value in enumerate(column):
+                z_score = (value - mean) / std_dev
+                
+                print(f"el valor atipico es = {value} con valor z = {abs(z_score)}")
+                if abs(z_score) > 2.75:  # Umbral de 3 para detectar valores atípicos
+                    outliers.append((i, value))
+                    #print(f"encontradoooooooooooooooooooo {}")
+            
+            print(f"Atributo {col_num + 1}: Media = {mean}, Desviación estándar = {std_dev}")
+            print(f"Valores atípicos: {outliers}\n")
 
  
 

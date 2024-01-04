@@ -4,7 +4,7 @@ from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
 
-ARCHIVO = './wine.data'
+ARCHIVO = '/home/ed/Documents/GitHub/Inteligencia_Artificial/Segundo Parcial/PL4/wine.data'
 ARCHIVO1 = 'new.txt'
 ARCHIVO2 = 'new2.txt'
 ARCHIVO3 = 'new3.txt'
@@ -35,20 +35,29 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 #print_matrix(Matriz01)
 
 
-#Detectar el porcentaje de muestras
 
-error = ERROR(base_datos.data,3)
+# Instancia del modelo k-NN y entrenamiento
+knn = KNN(k=10, distance_metric='manhattan')
+training_data = base_datos.data
+test_data = Matriz01
+knn.fit(training_data)
 
-#print_matrix(error.normalizar())
 
-#print(error.desviacion_estandar(1))
-#print(error.media(1))
+#print("labels:")
+#knn.get_labels()
 
-#print_matrix(error.data)
-#error.eliminar_columna(1)
-#print_matrix(error.data)
+#---------------------------------------------
 
-error.vacios(3)
+# Predicciones para los datos de prueba
+#predictions = knn.predict(test_data)
+#print(f"Predicciones:{predictions}")
 
-data = error.data_to_list()
-data2 = error.detect_outliers_Zscore(data)
+
+
+bootstrap_predictions = knn.bootstrap(base_datos.data, num_samples=2)
+print(bootstrap_predictions)
+
+
+#eficiencia,error,des_efi,des_err = knn.bootstrap_(base_datos.data, num_samples=2)
+
+#print(eficiencia,error,des_efi,des_err)

@@ -14,6 +14,7 @@ ARCHIVO4 = 'wine.csv'
 DELIMITADOR = ','
 ATRIBUTOS = ['Class', 'Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Total phenols', 'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins', 'Color Intensity', 'Hue', 'ODS280/ODS315 of diluted wines', 'Proline']
 ATRIBUTO = ['Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Total phenols', 'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins', 'Color Intensity', 'Hue', 'ODS280/ODS315 of diluted wines', 'Proline']
+CLASE = "Class"
 SUBCONJUNTO = 50
 INICIO = 1
 FIN = 10
@@ -42,7 +43,7 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 
 error = ERROR(base_datos.data,3)
 clasificar = KFoldCrossValidation(ARCHIVO4,4)
-clasificar.train_and_evaluate(ATRIBUTO)
+clasificar.train_and_evaluate(ATRIBUTO,CLASE)
 #archivo = File(ARCHIVO, ARCHIVO4, ATRIBUTOS)
 #archivo.convertir()
 

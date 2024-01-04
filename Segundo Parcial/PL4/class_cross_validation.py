@@ -9,11 +9,11 @@ class KFoldCrossValidation:
         self.k = k
         self.model = RandomForestClassifier()
     
-    def train_and_evaluate(self,Atributos):
+    def train_and_evaluate(self,Atributos,Clase):
         features = Atributos
         
         X = self.data[features].values
-        y = self.data["Class"].values
+        y = self.data[Clase].values
         
         self.model.fit(X, y)
         

@@ -3,6 +3,7 @@ from class_file import File
 from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
+from class_train_test import TrainTest
 
 ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'
@@ -19,7 +20,7 @@ FIN = 10
 def print_matrix(matrix):
     for sublist in matrix:
         for item in sublist:
-            print(item, end=", ")
+            print(item, end=', \n')
         print()  # Salto de línea después de cada lista interior
     print()  
 
@@ -48,7 +49,9 @@ error = ERROR(base_datos.data,3)
 #error.eliminar_columna(1)
 #print_matrix(error.data)
 
-error.vacios(3)
-
-data = error.data_to_list()
-data2 = error.detect_outliers_Zscore(data)
+#error.vacios(3)
+#print(error.contar(3))
+TT = TrainTest(base_datos.data, 80)
+print_matrix(TT.conjunto_aprendizaje())
+#data = error.data_to_list()
+#data2 = error.detect_outliers_Zscore(data)

@@ -142,16 +142,10 @@ class ERROR:
             # Detectar valores atípicos utilizando Z-score
             for i, value in enumerate(column):
                 z_score = (value - mean) / std_dev
-                
-                print(f"el valor atipico es = {value} con valor z = {abs(z_score)}")
                 if abs(z_score) > 2.75:  # Umbral de 3 para detectar valores atípicos
                     outliers.append((i, value))
-                    #print(f"encontradoooooooooooooooooooo {}")
-            
             print(f"Atributo {col_num + 1}: Media = {mean}, Desviación estándar = {std_dev}")
             print(f"Valores atípicos: {outliers}\n")
-
- 
 
     def data_to_list(self):
         data = []

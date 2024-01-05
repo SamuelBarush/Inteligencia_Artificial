@@ -77,8 +77,6 @@ class KNN:
                 indices = [random.randint(0, len(X) - 1) for _ in range(len(X))]
                 X_bootstrap = [X[i] for i in indices]
                
-               
-
                 #print(X_bootstrap)
                 #print(y_bootstrap)
                 # Entrenar el modelo con la muestra bootstrap
@@ -116,7 +114,6 @@ class KNN:
 
             class_prediction = list(zip(y_true_bootstrap,y_pred_bootstrap)) # [(clase real, predicción por el bootstrapp),(...)]
         return class_prediction
-
 
 
     def efic_x_group(self, class_prediction):

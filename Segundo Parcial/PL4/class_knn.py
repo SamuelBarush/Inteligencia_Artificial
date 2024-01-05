@@ -101,10 +101,7 @@ class KNN:
         return 100 - self.calcular_eficiencia(y_true, y_pred)
 
     def bootstrap_(self, X, num_samples):
-        predictions = []
-        eficiencias_por_grupo = {}
-        errores_por_grupo = {}
-
+        
         for _ in range(num_samples):
             # Muestreo con reemplazo para crear una muestra bootstrap
             indices = [random.randint(0, len(X) - 1) for _ in range(len(X))]
@@ -114,30 +111,62 @@ class KNN:
             self.fit(X_bootstrap)
 
             # Hacer predicciones con el modelo ajustado utilizando nuevas muestras de prueba
-            y_true_bootstrap = [item[0] for item in X_bootstrap]  # Suponiendo que el primer elemento es la clase verdadera
+            y_true_bootstrap = [item[0][0] for item in X_bootstrap]  # Suponiendo que el primer elemento es la clase verdadera
             y_pred_bootstrap = self.predict(X_bootstrap)
 
-            # Agrupar predicciones y valores reales por clase/grupo
-            for true, pred in zip(y_true_bootstrap, y_pred_bootstrap):
-                if true not in eficiencias_por_grupo:
-                    eficiencias_por_grupo[true] = []
-                    errores_por_grupo[true] = []
-                
-                eficiencia = self.calcular_eficiencia([true], [pred])
-                error = self.calcular_error([true], [pred])
+            class_prediction = list(zip(y_true_bootstrap,y_pred_bootstrap)) # [(clase real, predicción por el bootstrapp),(...)]
+        return class_prediction
 
-                eficiencias_por_grupo[true].append(eficiencia)
-                errores_por_grupo[true].append(error)
-            
-            # Guardar las predicciones para este bootstrap
-            predictions.append(y_pred_bootstrap)
 
-        # Calcular eficiencia y error generales y sus desviaciones estándar
-        predictions = np.array(predictions).astype(int)
-        eficiencia_general = self.calcular_eficiencia(y_true_bootstrap, np.mean(predictions, axis=0))
-        error_general = self.calcular_error(y_true_bootstrap, np.mean(predictions, axis=0))
 
-        desviacion_eficiencia = np.std([self.calcular_eficiencia([true]*len(eficiencias_por_grupo[true]), eficiencias_por_grupo[true]) for true in eficiencias_por_grupo])
-        desviacion_error = np.std([self.calcular_error([true]*len(errores_por_grupo[true]), errores_por_grupo[true]) for true in errores_por_grupo])
+    def efic_x_group(self, class_prediction):
+        # Calcular eficiencia por grupo
+        groups = {}  # Diccionario para almacenar resultados por grupo
+        for true_class, pred_class in class_prediction:
+            if true_class not in groups:
+                groups[true_class] = {'correct': 0, 'total': 0}
 
-        return eficiencia_general, error_general, desviacion_eficiencia, desviacion_error
+            groups[true_class]['total'] += 1
+            if true_class == pred_class:
+                groups[true_class]['correct'] += 1
+
+        # Calcular eficiencia para cada grupo
+        efficiencies = {}
+        for group, values in groups.items():
+            efficiency = values['correct'] / values['total'] if values['total'] > 0 else 0
+            efficiencies[group] = efficiency
+
+        return efficiencies
+
+
+
+    def efic_x_class(self, class_prediction, num_clases):
+        # Calcular eficiencia por clase
+        classes = {}  # Diccionario para almacenar resultados por clase
+
+        for i in class_prediction:
+            for j in class_prediction[i]:
+                true_value = class_prediction[i][j][0]
+                predict_value = class_prediction[i][j][1]
+
+
+        for true_class, pred_class in class_prediction:
+            if pred_class not in classes:
+                classes[pred_class] = {'correct': 0, 'total': 0}
+
+            classes[pred_class]['total'] += 1
+            if true_class == pred_class:
+                classes[pred_class]['correct'] += 1
+
+        # Calcular eficiencia para cada clase
+        efficiencies = {}
+        for class_, values in classes.items():
+            efficiency = values['correct'] / values['total'] if values['total'] > 0 else 0
+            efficiencies[class_] = efficiency
+
+        # Asegurar que se reporten todas las clases, incluso si no tienen predicciones
+        for class_ in range(num_clases):
+            if class_ not in efficiencies:
+                efficiencies[class_] = 0.0  # Establecer eficiencia en 0 para clases sin predicciones
+
+        return efficiencies

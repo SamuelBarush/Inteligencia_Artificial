@@ -54,8 +54,20 @@ knn.fit(training_data)
 
 
 
-bootstrap_predictions = knn.bootstrap(base_datos.data, num_samples=2)
-print(bootstrap_predictions)
+#bootstrap_predictions = knn.bootstrap(base_datos.data, num_samples=2)
+#print(bootstrap_predictions)
+
+data = base_datos.data
+data_n = ERROR(data,clases=3)
+normalized = data_n.normalizar()
+
+
+
+results = knn.bootstrap_(normalized, num_samples=1)
+
+print(knn.efic_x_class(results,num_clases=3))
+
+
 
 
 #eficiencia,error,des_efi,des_err = knn.bootstrap_(base_datos.data, num_samples=2)

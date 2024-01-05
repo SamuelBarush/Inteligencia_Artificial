@@ -5,12 +5,16 @@ from class_min import MIN
 from class_erros import ERROR
 from class_train_test import TrainTest
 
+ARCHIVOCSV = './wine.csv'
 ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'
 ARCHIVO2 = 'new2.txt'
 ARCHIVO3 = 'new3.txt'
 DELIMITADOR = ','
 ATRIBUTOS = ['Class', 'Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Total phenols', 'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins', 'Color Intensity', 'Hue', 'ODS280/ODS315 of diluted wines', 'Proline']
+
+ATRIBUTO = ['Alcohol', 'Malic acid', 'Ash', 'Alcalinity of ash', 'Magnesium', 'Total phenols', 'Flavanoids', 'Nonflavanoid phenols', 'Proanthocyanins', 'Color Intensity', 'Hue', 'ODS280/ODS315 of diluted wines', 'Proline']
+CLASE = 'Class'
 
 SUBCONJUNTO = 50
 INICIO = 1
@@ -51,7 +55,9 @@ error = ERROR(base_datos.data,3)
 
 #error.vacios(3)
 #print(error.contar(3))
-TT = TrainTest(base_datos.data, 80)
-print_matrix(TT.conjunto_aprendizaje())
+TT = TrainTest(ARCHIVOCSV, .2,'KNN', 5)
+
+TT.evaluar(ATRIBUTO, CLASE)
+#print_matrix(TT.conjunto_aprendizaje())
 #data = error.data_to_list()
 #data2 = error.detect_outliers_Zscore(data)

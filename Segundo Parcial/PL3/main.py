@@ -4,7 +4,7 @@ from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
 
-ARCHIVO = './wine.data'
+ARCHIVO = ''
 ARCHIVO1 = 'new.txt'
 ARCHIVO2 = 'new2.txt'
 ARCHIVO3 = 'new3.txt'

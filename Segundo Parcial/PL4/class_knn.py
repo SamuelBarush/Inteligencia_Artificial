@@ -99,7 +99,8 @@ class KNN:
         return 100 - self.calcular_eficiencia(y_true, y_pred)
 
     def bootstrap_(self, X, num_samples):
-        
+        boostraps =  list()
+
         for _ in range(num_samples):
             # Muestreo con reemplazo para crear una muestra bootstrap
             indices = [random.randint(0, len(X) - 1) for _ in range(len(X))]
@@ -113,57 +114,105 @@ class KNN:
             y_pred_bootstrap = self.predict(X_bootstrap)
 
             class_prediction = list(zip(y_true_bootstrap,y_pred_bootstrap)) # [(clase real, predicción por el bootstrapp),(...)]
-        return class_prediction
+            boostraps.append(class_prediction)
+        return boostraps
 
 
-    def efic_x_group(self, class_prediction):
-        # Calcular eficiencia por grupo
-        groups = {}  # Diccionario para almacenar resultados por grupo
-        for true_class, pred_class in class_prediction:
-            if true_class not in groups:
-                groups[true_class] = {'correct': 0, 'total': 0}
+    def efic_x_group(self, resultados_bootstrap):
+        eficiencia_por_grupo = []
+        error_por_grupo = []
 
-            groups[true_class]['total'] += 1
-            if true_class == pred_class:
-                groups[true_class]['correct'] += 1
+        for grupo_predicciones in resultados_bootstrap:
+            predicciones_por_clase = {}
+            total_predicciones = len(grupo_predicciones)
+            
+            for clase_real, prediccion in grupo_predicciones:
+                clase_real = str(clase_real)
+                
+                if clase_real not in predicciones_por_clase:
+                    predicciones_por_clase[clase_real] = {'correctas': 0, 'total': 0}
+                
+                predicciones_por_clase[clase_real]['total'] += 1
+                
+                if clase_real == str(prediccion):
+                    predicciones_por_clase[clase_real]['correctas'] += 1
 
-        # Calcular eficiencia para cada grupo
-        efficiencies = {}
-        for group, values in groups.items():
-            efficiency = values['correct'] / values['total'] if values['total'] > 0 else 0
-            efficiencies[group] = efficiency
+            # Calcular eficiencia y error para cada clase en el grupo
+            eficiencia_grupo = {}
+            error_grupo = {}
+            
+            for clase, valores in predicciones_por_clase.items():
+                if valores['total'] > 0:
+                    eficiencia = (valores['correctas'] / valores['total']) * 100
+                    error = 100 - eficiencia
+                else:
+                    eficiencia = 0.0
+                    error = 100.0
+                
+                eficiencia_grupo[clase] = eficiencia
+                error_grupo[clase] = error
 
-        return efficiencies
+            eficiencia_por_grupo.append(eficiencia_grupo)
+            error_por_grupo.append(error_grupo)
+
+        return eficiencia_por_grupo, error_por_grupo
 
 
 
-    def efic_x_class(self, class_prediction, num_clases):
-        # Calcular eficiencia por clase
-        classes = {}  # Diccionario para almacenar resultados por clase
+    def efic_x_class(self,resultados_bootstrap):
+        clases = set()
+        predicciones_por_clase = {}
 
-        for i in class_prediction:
-            for j in class_prediction[i]:
-                true_value = class_prediction[i][j][0]
-                predict_value = class_prediction[i][j][1]
+        # Obtener la lista única de clases
+        for muestra in resultados_bootstrap:
+            for clase_real, _ in muestra:
+                clases.add(clase_real)
+
+        # Inicializar el contador de predicciones para cada clase
+        for clase in clases:
+            predicciones_por_clase[clase] = {'correctas': 0, 'total': 0}
+
+        # Contar predicciones correctas para cada clase
+        for muestra in resultados_bootstrap:
+            for clase_real, prediccion in muestra:
+                predicciones_por_clase[clase_real]['total'] += 1
+                if str(clase_real) == str(prediccion):
+                    predicciones_por_clase[clase_real]['correctas'] += 1
+
+        # Calcular el porcentaje de eficiencia para cada clase
+        eficiencia_por_clase = {}
+        for clase, valores in predicciones_por_clase.items():
+            if valores['total'] > 0:
+                eficiencia = (valores['correctas'] / valores['total']) * 100
+            else:
+                eficiencia = 0.0
+            eficiencia_por_clase[str(clase)] = eficiencia
+
+        return eficiencia_por_clase
 
 
-        for true_class, pred_class in class_prediction:
-            if pred_class not in classes:
-                classes[pred_class] = {'correct': 0, 'total': 0}
 
-            classes[pred_class]['total'] += 1
-            if true_class == pred_class:
-                classes[pred_class]['correct'] += 1
+    def calcular_eficiencia_error_general(self,resultados):
+        eficiencias, errores = resultados
+        eficiencias_generales = []
+        errores_generales = []
 
-        # Calcular eficiencia para cada clase
-        efficiencies = {}
-        for class_, values in classes.items():
-            efficiency = values['correct'] / values['total'] if values['total'] > 0 else 0
-            efficiencies[class_] = efficiency
+        for eficiencia_grupo, error_grupo in zip(eficiencias, errores):
+            eficiencia_promedio = np.mean(list(eficiencia_grupo.values()))
+            error_promedio = np.mean(list(error_grupo.values()))
 
-        # Asegurar que se reporten todas las clases, incluso si no tienen predicciones
-        for class_ in range(num_clases):
-            if class_ not in efficiencies:
-                efficiencies[class_] = 0.0  # Establecer eficiencia en 0 para clases sin predicciones
+            eficiencias_generales.append(eficiencia_promedio)
+            errores_generales.append(error_promedio)
 
-        return efficiencies
+        eficiencia_promedio_general = np.mean(eficiencias_generales)
+        error_promedio_general = np.mean(errores_generales)
+
+        desviacion_eficiencia = np.std(eficiencias_generales)
+        desviacion_error = np.std(errores_generales)
+
+        return {
+            'eficiencia_promedio_general': eficiencia_promedio_general,
+            'error_promedio_general': error_promedio_general,
+            'desviacion_eficiencia': desviacion_eficiencia,
+            'desviacion_error': desviacion_error
+        }

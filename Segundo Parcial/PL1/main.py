@@ -1,7 +1,7 @@
 from class_data import Data
 from class_file import File
 
-ARCHIVO = 'Segundo Parcial\PL1\wine.data'
+ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'
 ARCHIVO2 = 'new2.txt'
 ARCHIVO3 = 'new3.txt'

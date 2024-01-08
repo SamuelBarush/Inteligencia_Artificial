@@ -39,16 +39,22 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 
 error = ERROR(base_datos.data,3)
 
-#print_matrix(error.normalizar())
-
-#print(error.desviacion_estandar(1))
-#print(error.media(1))
-
-#print_matrix(error.data)
-#error.eliminar_columna(1)
-#print_matrix(error.data)
-
+print("Total de elementos en cada clase")
+print(error.contar(3))
+print("Porcentaje de clases")
+print(error.porcentaje())
+print("Datos Vacios")
 error.vacios(3)
-
+print_matrix(error.normalizar())
 data = error.data_to_list()
 data2 = error.detect_outliers_Zscore(data)
+print(error.desviacion_estandar(1))
+print(error.media(1))
+
+print_matrix(error.data)
+error.eliminar_columna(1)
+print_matrix(error.data)
+
+print_matrix(error.data)
+error.eliminar_fila(3)
+print_matrix(error.data)

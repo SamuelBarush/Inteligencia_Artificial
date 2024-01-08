@@ -27,12 +27,12 @@ base_datos = Data(ARCHIVO, DELIMITADOR, ATRIBUTOS)
 
 Matriz = base_datos.get_attribute(['Class','Alcohol','Malic acid','Magnesium'])
 Matriz0 = base_datos.get_rows_range(Matriz,50,60)
-print_matrix(Matriz0)
+#print_matrix(Matriz0)
 
 
 Matriz1 = base_datos.get_attribute(['Class','Alcohol','Malic acid','Magnesium'])
 Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
-print_matrix(Matriz01)
+#print_matrix(Matriz01)
 
 
 # Instancia del modelo k-NN y entrenamiento
@@ -42,14 +42,14 @@ test_data = Matriz01
 knn.fit(training_data)
 
 
-print("labels:")
-knn.get_labels()
+#print("labels KNN:")
+#knn.get_labels()
 
 #---------------------------------------------
 
 # Predicciones para los datos de prueba
 predictions = knn.predict(test_data)
-print(f"Predicciones:{predictions}")
+print(f"Predicciones KNN:{predictions}")
 
 
 min = MIN(distance_metric ="euclidean")
@@ -58,10 +58,10 @@ test_data = Matriz01
 min.fit(training_data)
 
 
-#print("labels:")
+#print("labels MIN:")
 #min.get_labels()
 
 
 # Predicciones para los datos de prueba
 predictions = min.predict(test_data)
-print(f"Predicciones:{predictions}")
+print(f"Predicciones MIN:{predictions}")

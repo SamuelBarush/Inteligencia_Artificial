@@ -1,32 +1,34 @@
-from sklearn.model_selection import KFold
-import numpy as np
 
 class KFoldCrossValidation:
-    def __init__(self, data, labels, k=5, random_state=None):
-        self.data = self.convert_to_numpy(data)
-        self.labels = np.array(labels)
+    def __init__(self, model, k=5):
+        self.model = model
         self.k = k
-        self.random_state = random_state
-        self.kfold = KFold(n_splits=k, shuffle=True, random_state=random_state)
 
-    def convert_to_numpy(self, data):
-        # Convierte los datos a un formato numpy adecuado para el uso de modelos de aprendizaje automático
-        converted_data = []
-        for row in data:
-            converted_row = [float(value) if dtype == 'float' else int(value) for value, dtype, _ in row[1:]]
-            converted_data.append(converted_row)
-        return np.array(converted_data)
+    def split_data(self, data):
+        fold_size = len(data) // self.k
+        folds = [data[i:i+fold_size] for i in range(0, len(data), fold_size)]
+        return folds
 
-    def train_and_evaluate(self, model):
-        scores = []
-        for train_index, test_index in self.kfold.split(self.data):
-            X_train, X_test = self.data[train_index], self.data[test_index]
+    def calculate_accuracy(self, predictions, actual_labels):
+        correct_predictions = sum(1 for p, a in zip(predictions, actual_labels) if p == a)
+        total_predictions = len(predictions)
+        accuracy = correct_predictions / total_predictions
+        return accuracy
 
-            model.fit(X_train, )
-            score = model.score(X_test,)
-            scores.append(score)
+    def cross_validate(self, data):
+        folds = self.split_data(data)
+        accuracies = []
 
-        average_score = np.mean(scores)
-        return average_score
+        for i in range(self.k):
+            test_set = folds[i]
+            train_set = [data[j] for j in range(self.k) if j != i for data in folds[j]]
 
+            self.model.fit(train_set)
+            predictions = self.model.predict(test_set)
 
+            actual_labels = [data[0][0][0] for data in test_set]
+            accuracy = self.calculate_accuracy(predictions, actual_labels)
+            accuracies.append(accuracy)
+
+        average_accuracy = sum(accuracies) / self.k
+        print(f'Precisión promedio de K-Fold Cross Validation (K={self.k}): {average_accuracy}')

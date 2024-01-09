@@ -4,7 +4,7 @@ from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
 from class_k_fold_cross_validation import KFoldCrossValidation
-from class_cross_validation import KFoldCrossValidation
+#from class_cross_validation import KFoldCrossValidation
 
 ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'
@@ -41,26 +41,8 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 
 #Detectar el porcentaje de muestras
 
+modelo = KNN(k=10, distance_metric='manhattan')
+
 error = ERROR(base_datos.data,3)
-clasificar = KFoldCrossValidation(ARCHIVO4,4)
-clasificar.train_and_evaluate(ATRIBUTO,CLASE)
-#archivo = File(ARCHIVO, ARCHIVO4, ATRIBUTOS)
-#archivo.convertir()
-
-#kfold = KFoldCrossValidation(base_datos.data, base_datos.attributes, k=14, random_state=42)
-#model = RandomForestClassifier()
-#average_score = kfold.train_and_evaluate(model)
-
-#print_matrix(error.normalizar())
-
-#print(error.desviacion_estandar(1))
-#print(error.media(1))
-
-#print_matrix(error.data)
-#error.eliminar_columna(1)
-#print_matrix(error.data)
-
-#error.vacios(3)
-
-#data = error.data_to_list()
-#data2 = error.detect_outliers_Zscore(data)
+clasificar = KFoldCrossValidation(modelo, 5)
+clasificar.cross_validate(base_datos.data)

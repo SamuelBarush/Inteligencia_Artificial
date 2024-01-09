@@ -4,7 +4,6 @@ from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
 from class_k_fold_cross_validation import KFoldCrossValidation
-#from class_cross_validation import KFoldCrossValidation
 
 ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'

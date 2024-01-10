@@ -44,20 +44,11 @@ Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
 
 error = ERROR(base_datos.data,3)
 
-#print_matrix(error.normalizar())
+TT = TrainTest(base_datos.data, 80)
+conjunto_prueba, conjunto_aprendizaje = TT.conjunto_aprendizaje()
 
-#print(error.desviacion_estandar(1))
-#print(error.media(1))
+#print_matrix(conjunto_prueba)
+#print_matrix(conjunto_aprendizaje)
 
-#print_matrix(error.data)
-#error.eliminar_columna(1)
-#print_matrix(error.data)
-
-#error.vacios(3)
-#print(error.contar(3))
-TT = TrainTest(ARCHIVOCSV, .2,'KNN', 5)
-
-TT.evaluar(ATRIBUTO, CLASE)
-#print_matrix(TT.conjunto_aprendizaje())
-#data = error.data_to_list()
-#data2 = error.detect_outliers_Zscore(data)
+#TT.entrenamiento_prueba(conjunto_aprendizaje, conjunto_prueba)
+print (TT.TT_validation(conjunto_aprendizaje, conjunto_prueba))

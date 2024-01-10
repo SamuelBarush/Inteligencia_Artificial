@@ -1,35 +1,23 @@
 from class_erros import ERROR
-import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import  accuracy_score, precision_score
+import statistics
 
 class TrainTest:
 
-    def __init__(self, archivo , porcentaje_aprendizaje, model, neighbors) -> None:
-        self.data = pd.read_csv(archivo)
+    def __init__(self, data, porcentaje_aprendizaje) -> None:
+        self.data = data
         self.porcentaje_aprendizaje = porcentaje_aprendizaje
-        
-        self.model_name = model.lower()
-        self.neighbors = neighbors
-        
-        self.model = self.__get_model()
-        
-        #self.contador_clases = ERROR(data,3)
-        #self.conjunto_aprendizaje, self.conjunto_prueba = self.conjuntos_aprendizaje()
+        self.contador_clases = ERROR(data,3)
 
-    def __get_model(self):
-        if self.model_name == 'knn':
-            return KNeighborsClassifier(n_neighbors=self.neighbors)
-        elif self.model_name == 'random_forest':
-            return RandomForestClassifier()
-        else:
-            raise ValueError("Modelo no válido")
+    def conjunto_aprendizaje(self):
+        """
+        Función que devuelve los subconjuntos de aprendizaje por clase.
 
-    def conjuntos_aprendizaje(self):
-        #OBtener las clases y la cantidad de muestras para cada clase:
+        Returns:
+        conjunto_prueba (list): Lista de subconjuntos de prueba por clase.
+        conjunto_aprendizaje (list): Lista de subconjuntos de aprendizaje por clase.
+        """
+        # Obtener las clases y la cantidad de muestras para cada clase:
         clases = len(self.contador_clases.clases)
         muestras = self.contador_clases.clases
         
@@ -57,33 +45,40 @@ class TrainTest:
                         conjunto_prueba[i].append(self.data[j])
 
         return conjunto_prueba, conjunto_aprendizaje
+
+    def train_model(self, conjunto_aprendizaje):
+        # Lógica de entrenamiento
+
+        pass
+
+    def predict(self, conjunto_prueba):
+        # Lógica de predicción 
+        predictions = []
+        for i in range(len(conjunto_prueba)):
+            predictions.append(0)
+        pass
+
+    def TT_validation(self, conjunto_aprendizaje, conjunto_prueba):
+        errores = []
+        accuracies = []
+
+        # Lógica de entrenamiento
+        self.train_model(conjunto_aprendizaje)
+
+        # Lógica de predicción
+        predictions = self.predict(conjunto_prueba)
+
+        # Cálculo de precisión y error
+        actual_labels = [x[0][0][0] for x in conjunto_prueba]
+        accuracy, error = self.calculate_accuracy(predictions, actual_labels)
+        accuracies.append(accuracy)
+        errores.append(error)
+
+        # Imprime los resultados
+        print(f"Porcentaje de Eficiencia: {accuracy * 100}%")
+        print(f"Porcentaje de Error: {error * 100}%")
+
+        return accuracies, errores
+
+
     
-    
-    def evaluar(self, Atributo, Clase):
-        X = self.data[Atributo].values
-        Y = self.data[Clase].values
-
-        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=self.porcentaje_aprendizaje, random_state=10)
-
-        model_TT = self.model
-        model_TT.fit(X_train, Y_train)
-
-        y_pred = model_TT.predict(X_test)
-
-        accuracy = accuracy_score(Y_test, y_pred)
-        error = 1 - accuracy
-
-        efficiency = accuracy * 100
-        error_percentage = error * 100
-
-        print(f"Efficiencia: {efficiency}%")
-        print(f"Error: {error_percentage}%")
-
-        print("Precision por clase")
-        precision_score_per_class = precision_score(Y_test, y_pred, average=None)
-        for i in range(len(precision_score_per_class)):
-            print(f"Clase {i+1}: {precision_score_per_class[i] * 100:.2f}")
-
-        std_deviation = np.std(precision_score_per_class)
-        print(f"Desviacion estandar: {std_deviation * 100:.2f}")
-        

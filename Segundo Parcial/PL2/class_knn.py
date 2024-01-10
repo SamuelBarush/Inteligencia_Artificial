@@ -12,26 +12,35 @@ class KNN:
         self.labels = [x[0][0][0] for x in X_train]  # Corregir para acceder al valor correcto de la etiqueta
 
     def predict(self, X_test):
-        predictions = []
-        for x in X_test:
-            x_values = self.parse_vector(x)
-            distances = []
-            for i, data_point in enumerate(self.data):
-                dist = self.calculate_distance(x_values, data_point)
-                distances.append((dist, self.labels[i]))  # Tupla de (distancia, etiqueta)
-            print(distances)    
-            distances.sort(key=lambda x: x[0])  # Ordenar distancias de menor a mayor
-            k_nearest = distances[:self.k]  # Obtener los k vecinos más cercanos
-            k_labels = [label for (_, label) in k_nearest]
+            """
+            Realiza la predicción de las etiquetas para un conjunto de datos de prueba utilizando el algoritmo K-Nearest Neighbors (KNN).
 
-            # Votación para determinar la etiqueta
-            prediction = max(set(k_labels), key=k_labels.count)
+            Parámetros:
+            - X_test: Una lista de vectores de características de los datos de prueba.
 
-            # Mostrar la votación
-            print(f"Para el punto, la votación fue: {k_labels}")
+            Retorna:
+            - predictions: Una lista de las etiquetas predichas para cada vector de características en X_test.
+            """
+            predictions = []
+            for x in X_test:
+                x_values = self.parse_vector(x)
+                distances = []
+                for i, data_point in enumerate(self.data):
+                    dist = self.calculate_distance(x_values, data_point)
+                    distances.append((dist, self.labels[i]))  # Tupla de (distancia, etiqueta)
+                print(distances)    
+                distances.sort(key=lambda x: x[0]) #Esta función se utiliza para determinar el valor que se debe utilizar para ordenar los elementos de la lista. 
+                k_nearest = distances[:self.k]  # Obtener los k vecinos más cercanos
+                k_labels = [label for (_, label) in k_nearest]
 
-            predictions.append(prediction)
-        return predictions
+                # Votación para determinar la etiqueta
+                prediction = max(set(k_labels), key=k_labels.count)# ordenará la lista distances en función del primer elemento de cada tupla. Esto es útil en este contexto porque distances contiene tuplas de distancias y etiquetas, y queremos ordenar las tuplas por distancia.
+
+                # Mostrar la votación
+                print(f"Para el punto, la votación fue: {k_labels}")
+
+                predictions.append(prediction)
+            return predictions
 
     def calculate_distance(self, x1, x2):
         if self.distance_metric == 'manhattan':

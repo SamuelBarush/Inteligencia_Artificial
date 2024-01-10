@@ -4,7 +4,7 @@ from class_knn import KNN
 from class_min import MIN
 from class_erros import ERROR
 
-ARCHIVO = 'Segundo Parcial\PL4\wine.data'
+ARCHIVO = './wine.data'
 ARCHIVO1 = 'new.txt'
 ARCHIVO2 = 'new2.txt'
 ARCHIVO3 = 'new3.txt'
@@ -68,7 +68,7 @@ ENTRENAMIENTO, PRUEBA = dividir_entrenamiento_prueba(Matriz,porcentaje_prueba=0.
 
 
 # Instancia del modelo k-NN 
-knn = KNN(k=3, distance_metric='manhattan')
+knn = KNN(k=5, distance_metric='manhattan')
 
 # Instancia del modelo min distancia
 min = MIN(distance_metric='euclidean')
@@ -82,16 +82,29 @@ min.fit(ENTRENAMIENTO)
 
 
 
-results_knn = knn.bootstrap_(PRUEBA, num_samples=2)
-results_min = min.bootstrap_(PRUEBA,num_samples=2)
+resultados_tt_knn = knn.Train_Test(PRUEBA, 80)
+resultados_tt_min = min.Train_Test(PRUEBA, 80)
+
+eficiencia_error_knn = knn.efic_x_group(resultados_tt_knn)
+eficiencia_error_min = min.efic_x_group(resultados_tt_min)
+
+resultados_tt_knn = knn.calcular_eficiencia_error_general(eficiencia_error_knn)
+resultados_tt_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
+
+print(resultados_tt_knn)
+print(resultados_tt_min)
+
+
+#results_knn = knn.bootstrap_(PRUEBA, num_samples=2)
+#results_min = min.bootstrap_(PRUEBA,num_samples=2)
 
 
 #print(knn.efic_x_class(results))
-eficiencia_error_knn = knn.efic_x_group(results_knn)
-eficiencia_error_min = min.efic_x_group(results_min)
+#eficiencia_error_knn = knn.efic_x_group(results_knn)
+#eficiencia_error_min = min.efic_x_group(results_min)
 
-resultados_generales_knn = knn.calcular_eficiencia_error_general(eficiencia_error_knn)
-resultados_generales_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
+##resultados_generales_knn = knn.calcular_eficiencia_error_general(eficiencia_error_knn)
+#resultados_generales_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
 
-print(resultados_generales_knn)
-print(resultados_generales_min)
+#print(resultados_generales_knn)
+#print(resultados_generales_min)

@@ -97,6 +97,36 @@ class KNN:
     def calcular_error(self,y_true, y_pred):
         # Función para calcular el error
         return 100 - self.calcular_eficiencia(y_true, y_pred)
+    
+    def Train_Test(self, data, porcentaje_entrenamiento):
+        """
+        Realiza el entrenamiento y prueba del algoritmo KNN.
+
+        Args:
+            data (list): Lista de datos de entrenamiento y prueba.
+            porcentaje_entrenamiento (int): Porcentaje de datos a utilizar para entrenamiento.
+
+        Returns:
+            list: Lista de resultados de entrenamiento y prueba.
+        """
+        train = list()  # Lista para almacenar los resultados de entrenamiento y prueba
+        conjuntos = int((len(data)*porcentaje_entrenamiento)/100)  # Calcular el número de conjuntos de datos de entrenamiento
+        for _ in range(conjuntos):
+            # Seleccionar índices aleatorios para crear un conjunto de datos de entrenamiento
+            # Crear una lista de índices aleatorios se hace para cada elemento que es una secuencia de 0 hasta el número de elementos del conjunto de datos
+            indice = [random.randint(0, len(data) - 1) for _ in range(len(data))] 
+            train_TT = [data[i] for i in indice]  # Crear el conjunto de datos de entrenamiento
+
+            self.fit(train_TT)  # Realizar el entrenamiento del algoritmo KNN con el conjunto de datos de entrenamiento
+
+            # Realizar predicciones
+            y_true = [item[0][0] for item in train_TT]  # Obtener las etiquetas verdaderas del conjunto de datos de entrenamiento
+            y_pred = self.predict(train_TT)  # Realizar predicciones con el conjunto de datos de entrenamiento
+
+            class_prediction = list(zip(y_true, y_pred))  # Combina los elementos en las mismas posiciones de las listas y crea una lista de tuplas
+            train.append(class_prediction)  # Agregar los resultados de entrenamiento y prueba a la lista
+
+        return train  # Devolver la lista de resultados de entrenamiento y prueba
 
     def bootstrap_(self, X, num_samples):
         boostraps =  list()

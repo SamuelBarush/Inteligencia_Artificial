@@ -41,6 +41,6 @@ class KFoldCrossValidation:
         standard_deviation_accuracies = statistics.stdev(accuracies)
 
         print(f'Precisión promedio de K-Fold Cross Validation (K={self.k}): {average_accuracy * 100}%')
-        print(f"Desviación estándar de las precisiones: {standard_deviation_accuracies * 100}%")
+        print(f"Desviación estándar de las precisiones: {standard_deviation_accuracies}")
         print(f'Porcentaje de error promedio: {average_error * 100}%')
-        print(f'Desviación estándar del porcentaje de error: {standard_deviation_errors * 100}%')
+        print(f'Desviación estándar del porcentaje de error: {standard_deviation_errors}')

@@ -61,45 +61,38 @@ def print_matrix(matrix):
 base_datos = Data(ARCHIVO, DELIMITADOR, ATRIBUTOS)
 
 Matriz = base_datos.get_attribute(['Class','Alcohol','Malic acid','Magnesium'])
-Matriz0 = base_datos.get_rows_range(Matriz,50,60)
-#print_matrix(Matriz0)
-
-
-Matriz1 = base_datos.get_attribute(['Class','Alcohol','Malic acid','Magnesium'])
-Matriz01 = base_datos.get_rows_range(Matriz1,1,10)
-#print_matrix(Matriz01)
 
 #Modelo K Fold Cross Validation
-
-#modelo = KNN(k=10, distance_metric='manhattan')
-
-#clasificar = KFoldCrossValidation(modelo, 5)
-#clasificar.cross_validate(base_datos.data)
+print("Modelo K Fold Cross Validation")
+modelo = KNN(k=10, distance_metric='manhattan')
+clasificar = KFoldCrossValidation(modelo, 5)
+clasificar.cross_validate(base_datos.data)
 
 # Modelo Train Test
+print("Modelo Train & Test")
 ENTRENAMIENTO, PRUEBA = dividir_entrenamiento_prueba(Matriz,porcentaje_prueba=0.10)
-
 knn = KNN2(k=5, distance_metric='manhattan')
 min = MIN(distance_metric='euclidean')
-#knn.fit(ENTRENAMIENTO)
-#min.fit(ENTRENAMIENTO)
-#resultados_tt_knn = knn.Train_Test(PRUEBA, 80)
-#resultados_tt_min = min.Train_Test(PRUEBA, 80)
-#eficiencia_error_knn = knn.efic_x_group(resultados_tt_knn)
-#eficiencia_error_min = min.efic_x_group(resultados_tt_min)
-#resultados_tt_knn = knn.calcular_eficiencia_error_general(eficiencia_error_knn)
-#resultados_tt_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
-#print(resultados_tt_knn)
-#print(resultados_tt_min)
+knn.fit(ENTRENAMIENTO)
+min.fit(ENTRENAMIENTO)
+resultados_tt_knn = knn.Train_Test(PRUEBA, 80)
+resultados_tt_min = min.Train_Test(PRUEBA, 80)
+eficiencia_error_knn = knn.efic_x_group(resultados_tt_knn)
+eficiencia_error_min = min.efic_x_group(resultados_tt_min)
+resultados_tt_knn = knn.calcular_eficiencia_error_general(eficiencia_error_knn)
+resultados_tt_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
+print(resultados_tt_knn)
+print(resultados_tt_min)
 
 #Modelo Bootstraping
 
+print("Modelo Bootstraping")
 results_knn = knn.bootstrap_(PRUEBA, num_samples=2)
-#results_min = min.bootstrap_(PRUEBA,num_samples=2)
+results_min = min.bootstrap_(PRUEBA,num_samples=2)
 #print(knn.efic_x_class(results))
 eficiencia_error_knn = knn.efic_x_group(results_knn)
-#eficiencia_error_min = min.efic_x_group(results_min)
+eficiencia_error_min = min.efic_x_group(results_min)
 resultados_generales_knn = knn.calcular_eficiencia_error_general(eficiencia_error_knn)
-#resultados_generales_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
+resultados_generales_min = min.calcular_eficiencia_error_general(eficiencia_error_min)
 print(resultados_generales_knn)
-#print(resultados_generales_min)
+print(resultados_generales_min)
